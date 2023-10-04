@@ -7,6 +7,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+.env
+
 # User-specific files
 *.rsuser
 *.suo
@@ -404,6 +406,9 @@ FodyWeavers.xsd
 *.class
 
 # Log file
+
+# macOS files
+*.DS_Store
 
 # BlueJ files
 *.ctxt
