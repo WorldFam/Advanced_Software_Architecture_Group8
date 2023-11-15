@@ -1,6 +1,8 @@
 from confluent_kafka import Producer
+from model import Order
 import time
 import json
+
 
 # Kafka producer configuration
 producer_config = {
@@ -23,12 +25,8 @@ def publish_message(topic, message):
 # Your scheduling logic here
 def schedule_task():
     # Replace this with your scheduling logic
-    task = {
-        'task_id': 1,
-        'task_name': 'Sample Task',
-        'timestamp': int(time.time())
-    }
-    return json.dumps(task)
+    order = Order(int(time.time()), 'Water Bottle', '64')
+    return json.dumps(order.__dict__)
 
 # Main loop for scheduling tasks and publishing messages
 if __name__ == "__main__":

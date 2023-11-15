@@ -45,11 +45,21 @@ services:
     #   KAFKA_BROKER_PORT: 29092
     depends_on:
       - kafka
+  
+  production-management-system: 
+    container_name: production-management-system
+    build:
+      context: ./production-module
+      dockerfile: Dockerfile
+    ports: 
+      - "9091:9091"
+    depends_on:
+      - kafka
 
   kafka-consumer:
-    container_name: consumer
+    container_name: consumer-monitoring
     image: confluentinc/cp-kafka:latest
-    command: ["kafka-console-consumer", "--bootstrap-server", "kafka:9092", "--topic", "scheduler-topic", "--from-beginning"]
+    command: ["kafka-console-consumer", "--bootstrap-server", "kafka:9092", "--topic", "production-topic", "--from-beginning"]
     depends_on:
       - kafka
 
