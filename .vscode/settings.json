@@ -2,7 +2,7 @@
   "files.associations": {
     "*.tex": "latex"
   },
-  "files.autoSave": "afterDelay",
+  "files.autoSave": "off",
   "editor.formatOnSave": true,
   "[latex]": {
     "editor.codeActionsOnSave": {
@@ -10,11 +10,9 @@
     }
   },
   "triggerTaskOnSave.tasks": {
-    "Run Docker Compose for LaTeX GroupReport": [
-      "report/GroupTemplate/*.tex",
-    ],
+    "Run Docker Compose for LaTeX GroupReport": ["report/GroupTemplate/*.tex"],
     "Run Docker Compose for LaTeX Reflections": [
-      "report/ReflectionsTemplate/*.tex",
-    ],
-  },
+      "report/ReflectionsTemplate/*.tex"
+    ]
+  }
 }
