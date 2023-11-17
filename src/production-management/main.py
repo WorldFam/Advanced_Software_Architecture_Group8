@@ -20,7 +20,6 @@ from channel.kafka_consumer import KafkaConsumer
 from models.models import Order
 from service.base_production_line_service import BaseProductionLineService
 
-
 # consumer = KafkaConsumer(broker="kafka:9092", 
 #                          topic="scheduler-topic")
 production = BaseProductionLineService("Packaging")
