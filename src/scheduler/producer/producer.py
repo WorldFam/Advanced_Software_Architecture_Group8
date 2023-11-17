@@ -2,9 +2,6 @@ import os
 from dotenv import load_dotenv
 from confluent_kafka import Producer
 from confluent_kafka import Producer
-from model.order import Order
-import time
-import json
 
 load_dotenv()
 

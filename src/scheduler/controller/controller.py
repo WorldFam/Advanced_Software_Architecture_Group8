@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from model.order import Order
-from producer.producer import publish_message
+from service.scheduler import schedule_order
 
 router = APIRouter()
 
@@ -12,7 +12,7 @@ def read_root():
 @router.post("/order")
 async def schedule_order(order: Order):
     try:
-        publish_message('scheduler-topic', order)
+        schedule_order(order)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e), response_model=None)
 
