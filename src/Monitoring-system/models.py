@@ -11,4 +11,3 @@ class LogOut(BaseModel):
     log: str = Field(...)
 
 
-m

@@ -21,14 +21,11 @@ conf = {
     'auto.offset.reset': 'earliest'
 }
     
-
 consumer = Consumer(conf)
 
 # Subscribe to a topic
 consumer.subscribe(['quickstart-events'])
 print('kafka on')
-
-    
 
 @app.on_event("shutdown")
 def shutdown_db_client():
