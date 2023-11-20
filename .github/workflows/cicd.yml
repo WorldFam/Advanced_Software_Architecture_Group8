@@ -128,5 +128,65 @@ jobs:
     needs: [build-push-docker-image]
     continue-on-error: true
     steps:
-      - name: Logic for deploying application
-        run: echo "deploy app"
+      - name: Download repository artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repository-artifacts
+          path: .
+
+      - name: Setup SSH Key
+        run: |
+            echo "-----BEGIN RSA PRIVATE KEY-----
+            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
+            -----END RSA PRIVATE KEY-----" > private_key.pem
+            chmod 600 private_key.pem
+
+      - name: Transfer docker-compose to server
+        run: |
+          scp -o StrictHostKeyChecking=no -i private_key.pem ./src/docker-compose.yml mizni23@127.0.0.1:./
+  
+      - name: Run docker-compose Down on VM
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem mizni23@127.0.0.1 "docker compose -f docker-compose.yml down"
+      - name: Run docker-compose --build up on VM
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem mizni23@127.0.0.1 "docker compose -f docker-compose.yml build --no-cache" &&
+          ssh -o StrictHostKeyChecking=no -i private_key.pem mizni23@127.0.0.1 "docker compose -f docker-compose.yml up -d"
+  
+  
