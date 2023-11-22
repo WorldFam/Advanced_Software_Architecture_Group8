@@ -137,6 +137,9 @@ jobs:
           name: repository-artifacts
           path: .
 
+      - name: Ping VM
+        run: ping -c 4 ${{ env.SERVER_IP }}
+
       - name: Setup SSH Key
         run: |
           echo "${{ env.SSH_PRIVATE_KEY }}" > private_key.pem
