@@ -1,3 +1,13 @@
+# Initialize and start runner for deployment to VM
+
+- Pull runner image from github container registry `docker pull ghcr.io/worldfam/ci-cd:v1.0`
+- Run container from image `docker run -it ghcr.io/worldfam/ci-cd:v1.0`
+  
+After that you will be promted to VM terminal where you need to follow these instructions:
+  - Switch user `su - mizni23`
+  - Change directory `cd actions-runner/`
+  - Start runner `./run.sh`
+
 # Advanced Software Architecture Portfolio Template
 
 - [Introduction](#introduction)
