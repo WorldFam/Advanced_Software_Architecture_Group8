@@ -16,9 +16,10 @@ env:
   PACKAGE_REGISTRY_TO_USE: nico8034
   DOCKER_IMAGE_NAME: lowercase-image-name
   PROJECT_NAME: ProjectName
-  GROUP_NUMBER: GroupNumber #I.e  Group02 REPLACE!!
-  SSH_USERNAME: mizni23 # REPLACE!!
-  SERVER_IP: 10.123.252.192 # REPLACE!!
+  GROUP_NUMBER: Group08 
+  SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+  SERVER_IP: ${{ secrets.SERVER_IP }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 jobs:
   # Create artifact of repository source code to use for consistensy accross all jobs
@@ -136,29 +137,20 @@ jobs:
           name: repository-artifacts
           path: .
 
-      - name: Ping VM
-        run: ping -c 4 ${{ env.SERVER_IP }}
-
       - name: Setup SSH Key
         run: |
-          echo ./id_rsa_scalable_mizni23 > private_key.pem
+          echo "${{ env.SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
 
-      - name: Connect to VM
+      - name: Transfer project files to server
         run: |
-          mkdir -p ~/.ssh/
-          echo ./id_rsa_scalable_mizni23 > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "echo 'Connected to VM'"
-
-      - name: Transfer docker-compose to server
-        run: |
-          scp -o StrictHostKeyChecking=no -i ./id_rsa_scalable_mizni23 ./src/docker-compose.yaml ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
+          scp -o StrictHostKeyChecking=no -i  private_key.pem -r . ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
   
       - name: Run docker-compose Down on VM
         run: |
-          ssh -o StrictHostKeyChecking=no -i ./id_rsa_scalable_mizni23 ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yml down"
+          ssh -o StrictHostKeyChecking=no -i  private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml down"
+
       - name: Run docker-compose --build up on VM
         run: |
-          ssh -o StrictHostKeyChecking=no -i ./id_rsa_scalable_mizni23 ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yml build --no-cache" &&
-          ssh -o StrictHostKeyChecking=no -i ./id_rsa_scalable_mizni23 ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yml up -d"
+          ssh -o StrictHostKeyChecking=no -i  private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml build --no-cache" &&
+          ssh -o StrictHostKeyChecking=no -i  private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml up -d"
