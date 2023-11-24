@@ -8,7 +8,6 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 .env
-/actions-runner/*
 
 # User-specific files
 *.rsuser
