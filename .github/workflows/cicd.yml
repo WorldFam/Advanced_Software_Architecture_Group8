@@ -13,10 +13,11 @@ on:
 
   # Environment Variables
 env:
-  PACKAGE_REGISTRY_TO_USE: nico8034
-  DOCKER_IMAGE_NAME: lowercase-image-name
-  PROJECT_NAME: ProjectName
-  GROUP_NUMBER: GroupNumber #I.e  Group02
+  DOCKER_IMAGE_NAME: application
+  GROUP_NUMBER: Group08 
+  SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+  SERVER_IP: ${{ secrets.SERVER_IP }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 jobs:
   # Create artifact of repository source code to use for consistensy accross all jobs
@@ -124,9 +125,36 @@ jobs:
 
   # Job for deploying the application, could be the logic for deploying to your VM  
   deploy-application:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [build-push-docker-image]
     continue-on-error: true
     steps:
-      - name: Logic for deploying application
-        run: echo "deploy app"
+      - name: Download repository artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repository-artifacts
+          path: .
+
+      - name: Setup SSH Key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          eval $(ssh-agent -s)
+          ssh-add private_key.pem
+
+      - name: Run command on VM
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "echo Connection successful"
+
+      - name: Transfer project files to server
+        run: |
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r ./* ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
+  
+      - name: Run docker-compose Down on VM
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml down"
+
+      - name: Run docker-compose --build up on VM
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml build --no-cache" &&
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml up -d"
