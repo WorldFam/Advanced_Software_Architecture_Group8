@@ -151,8 +151,9 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no -i private_key.pem ./src/docker-compose.yaml ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
 
-      - name: Docker Login to GitHub Container Registry
-        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin  
+      - name: Run Docker Login and Pull on VM
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin && docker pull ghcr.io/worldfam/scheduler:latest"
 
       - name: Run docker-compose Down on VM
         run: |
