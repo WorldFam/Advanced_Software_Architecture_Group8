@@ -3,7 +3,7 @@
 cd /home/docker/actions-runner
 
 # Configure the runner in the background
-./config.sh --url https://github.com/WorldFam/Advanced_Software_Architecture_Group8 --token ANKVGK3NWV2CW33Z4WF42ULFL7YYK &
+./config.sh --url "$REPO_URL" --token "$TOKEN" &
 
 # Wait for the background process to finish
 wait $!
