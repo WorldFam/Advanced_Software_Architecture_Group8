@@ -1,3 +1,8 @@
+# Initialize and start runner for deployment to VM
+
+- Pull runner image from github container registry `docker pull ghcr.io/worldfam/github-runner:latest`
+- Run container from image `docker run -e REPO_URL=https://github.com/WorldFam/Advanced_Software_Architecture_Group8 -e TOKEN=`<strong>`<REQUEST_FROM_REPO_OWNER>`<strong>`-t ghcr.io/worldfam/github-runner:latest`
+  
 # Advanced Software Architecture Portfolio Template
 
 - [Introduction](#introduction)
