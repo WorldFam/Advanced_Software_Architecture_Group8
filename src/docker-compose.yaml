@@ -60,7 +60,26 @@ services:
   #   depends_on:
   #     - kafka
 
-  #----------------------------------------------------------------------------------------------------------------------------------------
+  supply:
+    image: ghcr.io/worldfam/supply:latest
+    ports:
+      - "9093:9093"
+    depends_on:
+      - mysql
+  
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: supply_management
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
   # api:
   #   build:
   #     context: ./api

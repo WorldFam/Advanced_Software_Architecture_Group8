@@ -3,7 +3,7 @@ from producer.producer import publish_message
 import requests
 
 # Change with supply managament URL!!!
-api_url = "http://api.example.com/data"
+api_url = "http://localhost:9093/order"
 
 def schedule_order(order: Order):
     response = requests.post(api_url, json=order)

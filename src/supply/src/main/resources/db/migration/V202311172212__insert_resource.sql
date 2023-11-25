@@ -1,0 +1,1 @@
+INSERT INTO RESOURCE(id, size, amount) VALUES (1, '0.5L', 1000), (2, '1.5L', 1000), (2, '2L', 1000)
