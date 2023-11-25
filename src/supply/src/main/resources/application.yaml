@@ -3,9 +3,9 @@ spring:
     url: jdbc:mysql://localhost:3306/supply_management
     username: root
     password: password
-  flyway:
-      url: jdbc:mysql://localhost:3306/supply_management
-      user: root
-      password: password
+#  flyway:
+#      url: jdbc:mysql://localhost:3306/supply_management
+#      user: root
+#      password: password
 server:
   port: 9093
