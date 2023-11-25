@@ -1,0 +1,194 @@
+version: "3"
+
+services:
+
+  # kafka:
+  #   container_name: kafka
+  #   image: confluentinc/cp-kafka:latest
+  #   ports:
+  #     - "9092:9092"
+  #   environment:
+  #     KAFKA_BROKER_ID: 1
+  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+  #     # KAFKA_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  #     KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+  #     KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+  #   depends_on:
+  #     - zookeeper
+  #   # volumes:
+  #   #   - kafka-data:/var/lib/kafka/data
+
+  # zookeeper:
+  #   container_name: zookeeper
+  #   image: confluentinc/cp-zookeeper:latest
+  #   environment:
+  #     ZOOKEEPER_CLIENT_PORT: 2181
+  #   ports:
+  #     - "2181:2181"
+    # volumes:
+    #   - zookeeper-data:/var/lib/zookeeper/data
+    #   - zookeeper-logs:/var/lib/zookeeper/log
+
+  scheduler:
+    build:
+      context: ./scheduler
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    # environment:
+    #   KAFKA_BROKER_HOST: "kafka"
+    #   KAFKA_BROKER_PORT: 29092
+    # depends_on:
+    #   - kafka
+  
+  # production-management-system: 
+  #   container_name: production-management-system
+  #   build:
+  #     context: ./production-management
+  #     dockerfile: Dockerfile
+  #   ports: 
+  #     - "9091:9091"
+  #   depends_on:
+  #     - kafka
+
+  # kafka-consumer:
+  #   container_name: consumer-monitoring
+  #   image: confluentinc/cp-kafka:latest
+  #   command: ["kafka-console-consumer", "--bootstrap-server", "kafka:9092", "--topic", "production-topic", "--from-beginning"]
+  #   depends_on:
+  #     - kafka
+
+  supply:
+    build:
+      context: ./supply
+      dockerfile: Dockerfile
+    ports:
+      - "9093:9093"
+    depends_on:
+      - mysql
+  
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: supply_management
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # api:
+  #   build:
+  #     context: ./api
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "80:80"
+  #   environment:
+  #     DATABASE_URL: mysql://mysql:password@host.docker.internal:3306/numbers
+  #     DB_USER: mysql
+  #     DB_HOST: host.docker.internal
+  #     DB_NAME: numbers
+  #     DB_PASSWORD: password
+  #     DB_PORT: "3306"
+  #   depends_on:
+  #     - mysql
+  #     - scheduler
+  #   links:
+  #     - mysql
+
+  # mysql:
+  #   image: mysql:latest
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: password
+  #     MYSQL_DATABASE: numbers
+  #     MYSQL_USER: mysql
+  #     MYSQL_PASSWORD: password
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+
+  # order:
+  #   build:
+  #     context: ./order
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "9090:9090"
+  #   environment:
+  #     - name=value
+  #   depends_on:
+  #     # - kafka
+  #     # - zookeeper
+  #     - mongo
+
+  # supply:
+  #   build:
+  #     context: ./supply
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "9091:9091"
+  #   environment:
+  #      - name=value
+  #   depends_on:
+  #     - mysql
+
+  # monitor:
+  #   build:
+  #     context: ./monitor
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - elasticsearch
+  #   environment:
+  #     - name=value
+  #   ports:
+  #     - "5430:5430"
+
+  # production:
+  #   build:
+  #     context: ./production
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - kafka
+  #     - zookeeper
+  #   environment:
+  #     - name=value
+  #   ports:
+  #     - "5431:5431"
+
+  # mongo:
+  #   image: mongo:latest
+  #   environment:
+  #     MONGO_DB: mongodatabase
+  #     MONGO_USER: mongosql
+  #     MONGO_PASSWORD: mongopassword
+  #   ports:
+  #     - "5433:5433"
+  #   volumes:
+  #     - mongo-data:/var/lib/mongo/data
+
+  # elasticsearch:
+  #   image: elasticsearch:latest
+  #   environment:
+  #     ELASTICSEARCH_DB: elasticsearchdatabase
+  #     ELASTICSEARCH_USER: elasticsearchsql
+  #     ELASTICSEARCH_PASSWORD: elasticsearchpassword
+  #   ports:
+  #     - "5434:5434"
+  #   volumes:
+  #     - elasticsearch-data:/var/lib/elasticsearch/data
+
+volumes:
+  mysql_data:
+  # mongo-data:
+  # elasticsearch-data:
+  # zookeeper-data:
+  # zookeeper-logs:
+  # kafka-data:

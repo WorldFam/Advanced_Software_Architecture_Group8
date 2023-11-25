@@ -11,20 +11,20 @@ public class SupplyService {
 
     public SupplyService(SupplyRepository supplyRepository){
         this.supplyRepository = supplyRepository;
-        ResourceEntity small = new ResourceEntity();
-        small.setSize("0.5L");
-        small.setAmount(BigInteger.valueOf(1000));
-        supplyRepository.save(small);
-
-        ResourceEntity medium = new ResourceEntity();
-        medium.setSize("1.5L");
-        medium.setAmount(BigInteger.valueOf(1000));
-        supplyRepository.save(medium);
-
-        ResourceEntity large = new ResourceEntity();
-        large.setSize("2L");
-        large.setAmount(BigInteger.valueOf(17));
-        supplyRepository.save(large);
+//        ResourceEntity small = new ResourceEntity();
+//        small.setSize("0.5L");
+//        small.setAmount(BigInteger.valueOf(1000));
+//        supplyRepository.save(small);
+//
+//        ResourceEntity medium = new ResourceEntity();
+//        medium.setSize("1.5L");
+//        medium.setAmount(BigInteger.valueOf(1000));
+//        supplyRepository.save(medium);
+//
+//        ResourceEntity large = new ResourceEntity();
+//        large.setSize("2L");
+//        large.setAmount(BigInteger.valueOf(17));
+//        supplyRepository.save(large);
     }
 
     public void supply(Order order) throws InsufficientResourcesException {
