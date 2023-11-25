@@ -61,9 +61,7 @@ services:
   #     - kafka
 
   supply:
-    build:
-      context: ./supply-system
-      dockerfile: Dockerfile
+    image: ghcr.io/worldfam/supply:latest
     ports:
       - "9093:9093"
     depends_on:
