@@ -1,5 +1,0 @@
-CREATE TABLE Resource(
-    id INT PRIMARY KEY,
-    size NVARCHAR(255) NOT NULL,
-    amount BIGINT NOT NULL DEFAULT 0
-)

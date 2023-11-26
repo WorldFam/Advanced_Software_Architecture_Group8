@@ -1,4 +1,4 @@
-package supply.system;
+package com.example.supply;
 
 import jakarta.persistence.*;
 import lombok.Getter;

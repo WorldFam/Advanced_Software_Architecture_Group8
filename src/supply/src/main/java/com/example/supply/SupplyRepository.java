@@ -1,4 +1,4 @@
-package supply.system;
+package com.example.supply;
 
 import org.springframework.data.repository.CrudRepository;
 
