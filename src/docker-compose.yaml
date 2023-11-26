@@ -50,6 +50,14 @@ services:
     # volumes:
     #   - ./data:/var/lib/mysql
 
+  flyway:
+    image: flyway/flyway:latest
+    command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 migrate
+    depends_on:
+      - mysql
+    volumes:
+      - ./flyway-scripts:/flyway/sql
+
   # api:
   #   build:
   #     context: ./api
