@@ -9,6 +9,8 @@ on:
   # Environment Variables
 env:
   DOCKER_IMAGE_SCHEDULER: scheduler
+  DOCKER_IMAGE_SUPPLY: supply
+  DOCKER_IMAGE_PRODUCTION: production
   GROUP_NUMBER: Group08 
   SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
   SERVER_IP: ${{ secrets.SERVER_IP }}
@@ -136,6 +138,10 @@ jobs:
         with:
           name: repository-artifacts
           path: .
+          
+      - name: Build Maven project
+        run: mvn -f src/supply/pom.xml clean install
+      
       - name: Login to GitHub Package Registry
         uses: docker/login-action@v2
         with:
@@ -152,7 +158,7 @@ jobs:
         with:
           context: ./src/supply
           push: true
-          tags: ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_SCHEDULER }}:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_SCHEDULER }}:latest
+          tags: ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_SUPPLY }}:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_SUPPLY }}:latest
 
   # Job for deploying the application, could be the logic for deploying to your VM  
   deploy-application:
