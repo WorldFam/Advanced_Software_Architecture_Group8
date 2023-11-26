@@ -1,0 +1,6 @@
+com\example\supply\Resource.class
+com\example\supply\ResourceEntity.class
+com\example\supply\SupplyService.class
+com\example\supply\SupplyController.class
+com\example\supply\SupplyRepository.class
+com\example\supply\SupplyApplication.class

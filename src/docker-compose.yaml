@@ -2,39 +2,10 @@ version: "3"
 
 services:
 
-  # kafka:
-  #   container_name: kafka
-  #   image: confluentinc/cp-kafka:latest
-  #   ports:
-  #     - "9092:9092"
-  #   environment:
-  #     KAFKA_BROKER_ID: 1
-  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-
-  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-  #     # KAFKA_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
-  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-  #     KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-  #     KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-  #   depends_on:
-  #     - zookeeper
-  #   # volumes:
-  #   #   - kafka-data:/var/lib/kafka/data
-
-  # zookeeper:
-  #   container_name: zookeeper
-  #   image: confluentinc/cp-zookeeper:latest
-  #   environment:
-  #     ZOOKEEPER_CLIENT_PORT: 2181
-  #   ports:
-  #     - "2181:2181"
-    # volumes:
-    #   - zookeeper-data:/var/lib/zookeeper/data
-    #   - zookeeper-logs:/var/lib/zookeeper/log
-
   scheduler:
-    image: ghcr.io/worldfam/scheduler:latest
+    build:
+      context: ./scheduler
+      dockerfile: Dockerfile
     ports:
       - "9090:9090"
     # environment:
@@ -61,7 +32,9 @@ services:
   #     - kafka
 
   supply:
-    image: ghcr.io/worldfam/supply:latest
+    build:
+      context: ./supply
+      dockerfile: Dockerfile
     ports:
       - "9093:9093"
     depends_on:
@@ -69,16 +42,21 @@ services:
   
   mysql:
     image: mysql:latest
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: supply_management
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: supply
     ports:
       - "3306:3306"
+    # volumes:
+    #   - ./data:/var/lib/mysql
+
+  flyway:
+    image: flyway/flyway:latest
+    command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 migrate
+    depends_on:
+      - mysql
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./flyway-scripts:/flyway/sql
 
   # api:
   #   build:
@@ -180,9 +158,9 @@ services:
   #     - "5434:5434"
   #   volumes:
   #     - elasticsearch-data:/var/lib/elasticsearch/data
-
-volumes:
-  mysql_data:
+#
+# volumes:
+#  mysql_data:
   # mongo-data:
   # elasticsearch-data:
   # zookeeper-data:

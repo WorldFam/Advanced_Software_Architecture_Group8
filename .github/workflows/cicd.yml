@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
   # Environment Variables
 env:
@@ -36,7 +37,7 @@ jobs:
         with:
           name: deployment-artifact
           path: |
-            ./src/docker-compose.yaml
+            ./src/docker-compose.prod.yaml
 
   # Perform linting and/or other static code analysis
   code-analysis:
@@ -139,8 +140,15 @@ jobs:
           name: repository-artifacts
           path: .
           
-      - name: Build Maven project
-        run: mvn -f src/supply/pom.xml clean install
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn -B package --file src/supply/pom.xml
       
       - name: Login to GitHub Package Registry
         uses: docker/login-action@v2
@@ -185,7 +193,7 @@ jobs:
 
       - name: Transfer docker-compose to server
         run: |
-          scp -o StrictHostKeyChecking=no -i private_key.pem ./src/docker-compose.yaml ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
+          scp -o StrictHostKeyChecking=no -i private_key.pem ./src/docker-compose.prod.yaml ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
 
       - name: Run Docker Login and Pull on VM
         run: |
@@ -193,9 +201,9 @@ jobs:
 
       - name: Run docker-compose Down on VM
         run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml down"
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.prod.yaml down"
 
       - name: Run docker-compose --build up on VM
         run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml build --no-cache" &&
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.yaml up -d"
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.prod.yaml build --no-cache" &&
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }} "docker compose -f docker-compose.prod.yaml up -d"
