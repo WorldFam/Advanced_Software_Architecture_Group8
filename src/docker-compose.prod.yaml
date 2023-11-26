@@ -31,3 +31,6 @@ services:
       - mysql
     volumes:
       - ./flyway-scripts:/flyway/sql
+      
+volumes:
+  mysql_data:
