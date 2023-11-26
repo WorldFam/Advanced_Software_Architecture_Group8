@@ -1,11 +1,12 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/supply_management
+    url: jdbc:mysql://mysql:3306/supply
     username: root
     password: password
-#  flyway:
-#      url: jdbc:mysql://localhost:3306/supply_management
-#      user: root
-#      password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 server:
   port: 9093

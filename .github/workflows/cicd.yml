@@ -180,7 +180,7 @@ jobs:
 
       - name: Transfer docker-compose to server
         run: |
-          scp -o StrictHostKeyChecking=no -i private_key.pem ./src/docker-compose.yaml ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
+          scp -o StrictHostKeyChecking=no -i private_key.pem ./src/docker-compose.prod.yaml ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
 
       - name: Run Docker Login and Pull on VM
         run: |
