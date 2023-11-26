@@ -19,9 +19,8 @@ public class SupplyService {
     }
 
     public void addResource(Resource resource){
-        String size = supplyRepository.findBySize(resource.size()).getSize();
-        if(size.equals(resource.size())){
-            throw new IllegalArgumentException("Resource with this size already exits");
+        if(supplyRepository.existsBySize(resource.size())){
+            throw new IllegalArgumentException("Resource with this size already exists");
         }
 
         ResourceEntity entity = new ResourceEntity();
@@ -36,7 +35,7 @@ public class SupplyService {
             throw new IllegalArgumentException("Amount must be non-negative");
         }
 
-        ResourceEntity entity = supplyRepository.findById(Long.valueOf(id)).orElseThrow();
+        ResourceEntity entity = supplyRepository.findById(Long.valueOf(id)).orElseThrow(() -> new IllegalArgumentException("Resource does not exists"));
         entity.setAmount(entity.getAmount().add(BigInteger.valueOf(parsedAmount)));
         supplyRepository.save(entity);
     }

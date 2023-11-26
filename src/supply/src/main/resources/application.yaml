@@ -8,5 +8,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+    hibernate:
+      ddl-auto: update
 server:
   port: 9093
