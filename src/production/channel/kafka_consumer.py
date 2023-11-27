@@ -1,7 +1,9 @@
 from confluent_kafka import Consumer, KafkaError
+import json
 
+from models.models import Order
 class KafkaConsumer:
-    def __init__(self, broker, topic):
+    def __init__(self, broker, topic, callback_function):
         self.consumer = Consumer({
             'bootstrap.servers': broker,
             'group.id': 'console-consumer-20477',
@@ -11,10 +13,10 @@ class KafkaConsumer:
             'auto.offset.reset': 'earliest'  # Start reading from the beginning of the topic if no offset is stored for the consumer group.
         })
         self.topic = topic
-
-    def consume_messages(self, production):
+        self.callback_function = callback_function
         self.consumer.subscribe([self.topic])
 
+    def consume_messages(self):
         try:
             while True:
                 msg = self.consumer.poll(1.0)  # Timeout in seconds
@@ -29,9 +31,9 @@ class KafkaConsumer:
                         print(f"Error: {msg.error()}")
                 else:
                     # Process the message
-                    print(f"Received message: {msg.value().decode('utf-8')}")
-                    production.start_production_line(msg.value().decode('utf-8'))
-                    # return msg.value().decode('utf-8')
+                    order = json.loads(msg.value().decode('utf-8'))
+                    print(f"Received message: {order}")
+                    self.callback_function(order)
 
         except Exception as e:
             print(f"An unexpected error occurred: {str(e)}")

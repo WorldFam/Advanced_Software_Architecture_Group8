@@ -22,7 +22,7 @@ class BaseProductionLineService:
 
     def start_production_line(self, order: Order):
         if self.countdown_thread is None or not self.countdown_thread.is_alive():
-            start_number = int(order.amount)
+            start_number = int(order.get('amount'))
             self.producer.send_log("%s has been started. The amount remained: %i" % (self.operationName, start_number))
             self.countdown_thread = threading.Thread(target=self.countdown, args=(start_number,self.operationName))
             self.stopped.clear()
