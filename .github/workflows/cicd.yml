@@ -2,9 +2,6 @@ name: CI/CD Workflow
 
   # Workflow triggers
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
 
   # Environment Variables
@@ -201,7 +198,7 @@ jobs:
   # Job for deploying the application, could be the logic for deploying to your VM  
   deploy-application:
     runs-on: self-hosted
-    needs: [build-push-scheduler, build-push-supply]
+    needs: [build-push-scheduler, build-push-supply, build-push-production]
     continue-on-error: true
     steps:
       - name: Download Deployment Artifact
