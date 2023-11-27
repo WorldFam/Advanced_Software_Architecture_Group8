@@ -2,6 +2,54 @@ version: "3"
 
 services:
 
+#### Services ####
+
+  scheduler:
+    image: ghcr.io/worldfam/scheduler:latest
+    container_name: scheduler
+    ports:
+      - "9090:9090"
+    depends_on:
+      - kafka
+
+  supply:
+    image: ghcr.io/worldfam/supply:latest
+    container_name: supply
+    ports:
+      - "9093:9093"
+    depends_on:
+      - mysql
+
+  production:  
+    image: ghcr.io/worldfam/production:latest
+    container_name: production
+    ports: 
+      - "9091:9091"
+    depends_on:
+      - kafka
+
+### Databases ####
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: supply
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+### Middleware ####
+
+  flyway:
+    image: flyway/flyway:latest
+    command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 migrate
+    depends_on:
+      - mysql
+    volumes:
+      - ./flyway-scripts:/flyway/sql
+  
   kafka:
     container_name: kafka
     image: confluentinc/cp-kafka:latest
@@ -30,65 +78,6 @@ services:
     volumes:
       - zookeeper-data:/var/lib/zookeeper/data
       - zookeeper-logs:/var/lib/zookeeper/log
-
-  scheduler:
-    container_name: scheduler
-    build:
-      context: ./scheduler
-      dockerfile: Dockerfile
-    ports:
-      - "9090:9090"
-    environment:
-      KAFKA_BROKER_HOST: "kafka"
-      KAFKA_BROKER_PORT: 29092
-    depends_on:
-      - kafka
-  
-  production: 
-    container_name: production
-    build:
-      context: ./production
-      dockerfile: Dockerfile
-    ports: 
-      - "9091:9091"
-    depends_on:
-      - kafka
-
-  
-  kafka-consumer:
-    container_name: kafka-consumer
-    image: confluentinc/cp-kafka:latest
-    command: ["kafka-console-consumer", "--bootstrap-server", "kafka:9092", "--topic", "order-topic", "--from-beginning"]
-    depends_on:
-      - kafka
-
-  supply:
-    container_name: supply
-    build:
-      context: ./supply
-      dockerfile: Dockerfile
-    ports:
-      - "9093:9093"
-    depends_on:
-      - mysql
-  
-  mysql:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: supply
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-  flyway:
-    image: flyway/flyway:latest
-    command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 migrate
-    depends_on:
-      - mysql
-    volumes:
-      - ./flyway-scripts:/flyway/sql
 
 volumes:
   kafka-data:
