@@ -1,5 +1,6 @@
-class Order:
-    def __init__(self, id, name, amount):
-        self.id = id
-        self.name = name
-        self.amount = amount
+from pydantic import BaseModel
+
+class Order(BaseModel):
+    uuid: str
+    size: str
+    amount: str

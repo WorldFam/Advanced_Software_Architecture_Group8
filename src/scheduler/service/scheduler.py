@@ -10,7 +10,6 @@ def place_order(order: Order):
                 "amount": order.amount
             })
     if response.status_code == 200:
-        # publish_message('order-topic', order)
-        print("SUCCESS!")
+        publish_message('order-topic', order)
     else:
         print(f"Error: {response.status_code} - {response.text}")

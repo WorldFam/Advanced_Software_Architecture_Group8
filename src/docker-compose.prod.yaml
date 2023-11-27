@@ -2,11 +2,15 @@ version: "3"
 
 services:
 
+#### Services ####
+
   scheduler:
     image: ghcr.io/worldfam/scheduler:latest
     container_name: scheduler
     ports:
       - "9090:9090"
+    depends_on:
+      - kafka
 
   supply:
     image: ghcr.io/worldfam/supply:latest
@@ -15,7 +19,17 @@ services:
       - "9093:9093"
     depends_on:
       - mysql
-  
+
+  production:  
+    image: ghcr.io/worldfam/production:latest
+    container_name: production
+    ports: 
+      - "9091:9091"
+    depends_on:
+      - kafka
+
+### Databases ####
+
   mysql:
     image: mysql:latest
     environment:
@@ -26,6 +40,8 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+### Middleware ####
+
   flyway:
     image: flyway/flyway:latest
     command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 migrate
@@ -33,6 +49,38 @@ services:
       - mysql
     volumes:
       - ./flyway-scripts:/flyway/sql
+  
+  kafka:
+    container_name: kafka
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    depends_on:
+      - zookeeper
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+  zookeeper:
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    volumes:
+      - zookeeper-data:/var/lib/zookeeper/data
+      - zookeeper-logs:/var/lib/zookeeper/log
 
 volumes:
+  kafka-data:
+  zookeeper-data:
+  zookeeper-logs:
   mysql_data:
