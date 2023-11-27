@@ -3,6 +3,7 @@ version: "3"
 services:
 
   scheduler:
+    container_name: scheduler
     build:
       context: ./scheduler
       dockerfile: Dockerfile
@@ -32,6 +33,7 @@ services:
   #     - kafka
 
   supply:
+    container_name: supply
     build:
       context: ./supply
       dockerfile: Dockerfile

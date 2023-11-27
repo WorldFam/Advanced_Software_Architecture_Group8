@@ -4,11 +4,13 @@ services:
 
   scheduler:
     image: ghcr.io/worldfam/scheduler:latest
+    container_name: scheduler
     ports:
       - "9090:9090"
 
   supply:
     image: ghcr.io/worldfam/supply:latest
+    container_name: supply
     ports:
       - "9093:9093"
     depends_on:
@@ -31,6 +33,6 @@ services:
       - mysql
     volumes:
       - ./flyway-scripts:/flyway/sql
-      
+
 volumes:
   mysql_data:

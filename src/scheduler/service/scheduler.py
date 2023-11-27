@@ -2,13 +2,15 @@ from model.order import Order
 from producer.producer import publish_message
 import requests
 
-# Change with supply managament URL!!!
-api_url = "http://localhost:9093/order"
+url = "http://supply:9093"
 
-def schedule_order(order: Order):
-    response = requests.post(api_url, json=order)
+def place_order(order: Order):
+    response = requests.patch(url + "/supply",json={
+                "size": order.size,
+                "amount": order.amount
+            })
     if response.status_code == 200:
-        publish_message('order-topic', order)
-        print(response.json())
+        # publish_message('order-topic', order)
+        print("SUCCESS!")
     else:
         print(f"Error: {response.status_code} - {response.text}")

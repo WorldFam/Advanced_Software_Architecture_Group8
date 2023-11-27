@@ -41,17 +41,22 @@ public class SupplyService {
     }
 
     public void supplyWithResource(Resource resource) throws InsufficientResourcesException {
+        if (resource.amount() == 0) {
+            return;
+        }
+        
         ResourceEntity entity = supplyRepository.findBySize(resource.size());
 
         BigInteger amount = BigInteger.valueOf(resource.amount());
+
+        if (amount.compareTo(entity.getAmount()) > 0) {
+            throw new InsufficientResourcesException();
+        }
+
         BigInteger remainingAmount = entity.getAmount().subtract(amount);
 
-        if(remainingAmount.compareTo(BigInteger.ZERO) <= 0) {
-            throw new InsufficientResourcesException();
-        } else{
-            entity.setAmount(remainingAmount);
-            supplyRepository.save(entity);
-        }
+        entity.setAmount(remainingAmount);
+        supplyRepository.save(entity);
     }
 
 

@@ -27,13 +27,13 @@ public class SupplyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/resource/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/resource/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateResource(@PathVariable @NonNull String id, @RequestParam(name = "amount") String amount) {
         supplyService.updateResource(id, amount);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = "/supply", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/supply", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> supplyWithResource(@RequestBody Resource resource) throws InsufficientResourcesException {
         supplyService.supplyWithResource(resource);
         return new ResponseEntity<>(HttpStatus.OK);
