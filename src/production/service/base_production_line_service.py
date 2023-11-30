@@ -18,10 +18,11 @@ class BaseProductionLineService:
         self.operationName = name
     
         # Initialize the Kafka producer with your Kafka broker address and topic
-        self.producer = KafkaProducer(broker="kafka:9092", topic="production-topic")
+        # self.producer = KafkaProducer(broker="kafka:9092", topic="production-topic")
 
     def start_production_line(self, order: Order):
         if self.countdown_thread is None or not self.countdown_thread.is_alive():
+            print(order.get('amount'))
             start_number = int(order.get('amount'))
             self.producer.send_log("%s has been started. The amount remained: %i" % (self.operationName, start_number))
             self.countdown_thread = threading.Thread(target=self.countdown, args=(start_number,self.operationName))
