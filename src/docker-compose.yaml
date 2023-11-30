@@ -5,24 +5,25 @@ services:
 #### Services ####
 
   scheduler:
-    image: ghcr.io/worldfam/scheduler:latest
     container_name: scheduler
+    image: ghcr.io/worldfam/scheduler:latest
     ports:
       - "9090:9090"
     depends_on:
       - kafka
 
   supply:
-    image: ghcr.io/worldfam/supply:latest
     container_name: supply
+    image: ghcr.io/worldfam/supply:latest
+    restart: always
     ports:
       - "9093:9093"
     depends_on:
       - mysql
 
-  production:  
-    image: ghcr.io/worldfam/production:latest
+  production:
     container_name: production
+    image: ghcr.io/worldfam/production:latest
     ports: 
       - "9091:9091"
     depends_on:
@@ -31,7 +32,8 @@ services:
 ### Databases ####
 
   mysql:
-    image: mysql:latest
+    container_name: mysql
+    image: mysql:8.1
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: supply
@@ -43,12 +45,20 @@ services:
 ### Middleware ####
 
   flyway:
+    container_name: flyway
     image: flyway/flyway:latest
-    command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 migrate
+    command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 -baselineOnMigrate=true migrate
     depends_on:
       - mysql
     volumes:
       - ./flyway-scripts:/flyway/sql
+
+  kafka-consumer:
+    container_name: kafka-consumer
+    image: confluentinc/cp-kafka:latest
+    command: ["kafka-console-consumer", "--bootstrap-server", "kafka:9092", "--topic", "order-topic", "--from-beginning"]
+    depends_on:
+      - kafka
   
   kafka:
     container_name: kafka

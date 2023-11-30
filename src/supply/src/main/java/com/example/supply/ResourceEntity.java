@@ -11,7 +11,7 @@ import java.math.BigInteger;
 @Setter
 @Getter
 @NoArgsConstructor
-@Table(name = "Resource")
+@Table(name = "resource")
 public class ResourceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

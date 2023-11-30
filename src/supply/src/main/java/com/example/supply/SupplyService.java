@@ -47,6 +47,10 @@ public class SupplyService {
         
         ResourceEntity entity = supplyRepository.findBySize(resource.size());
 
+        if(entity == null){
+            throw new IllegalArgumentException("Resource not found");
+        }
+
         BigInteger amount = BigInteger.valueOf(resource.amount());
 
         if (amount.compareTo(entity.getAmount()) > 0) {
