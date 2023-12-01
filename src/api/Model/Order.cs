@@ -9,19 +9,19 @@ public class Order
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; }
+    public string? id { get; set; }
     
     [BsonElement("customer")]
-    public string Customer { get; set; }
+    public string customer { get; set; }
 
     [BsonElement("size")]
-    public string Size { get; set; }
+    public string size { get; set; }
 
     [BsonElement("amount")]
-    public string Amount { get; set; }
+    public string amount { get; set; }
 
     [BsonElement("timestamp")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
-    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public DateTime timestamp { get; set; } = DateTime.UtcNow;
 
 }

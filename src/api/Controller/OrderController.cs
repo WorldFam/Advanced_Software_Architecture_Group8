@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using api.Model;
 using api.Service;
+using System.Text.Json;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -19,22 +20,21 @@ public class OrdersController : ControllerBase
     [HttpGet]
     public IActionResult Get()
     {
-        var orders = _orderCollection.Find(order => true).ToList();
+        var orders =  _orderCollection.Find(order => true).ToList();
         return Ok(orders);
     }
 
     [HttpPost]
-    public IActionResult Post(Order order)
+    public async Task<IActionResult> Post(Order order)
     {
         try
         {
         _orderCollection.InsertOne(order);
+        var jsonOrder = JsonSerializer.Serialize(order);
+        Console.WriteLine(jsonOrder);
 
-        var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(order);
-        _orderConsumerService.ConsumeOrderAsync(jsonData);
-
-        return CreatedAtRoute(nameof(Get), new { id = order.Id }, order);
-
+        var response = await  _orderConsumerService.ConsumeOrderAsync(jsonOrder);
+        return Ok(response);
         }
         catch (Exception ex)
         {

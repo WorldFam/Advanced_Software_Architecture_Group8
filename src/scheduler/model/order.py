@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 
 class Order(BaseModel):
-    uuid: str
+    id: str
+    customer: str
     size: str
     amount: str
+    timestamp: str

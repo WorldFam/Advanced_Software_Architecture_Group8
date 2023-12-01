@@ -10,8 +10,9 @@ def read_root():
     return {"Hello": "World"}
 
 @router.post("/order")
-def schedule_order(order: Order):
+async def schedule_order(order: Order):
     try:
+        print(f"Order {order.__dict__} being scheduled")
         place_order(order)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
