@@ -1,40 +1,17 @@
-using api.persistence;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDbContext>(options => {
-    var connetionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString));
-});
-
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-WebApplication app = builder.Build();
-
-app.UseRouting();
-
-app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    webBuilder.UseStartup<Startup>();
                 });
-            });
-
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-
-
+    }

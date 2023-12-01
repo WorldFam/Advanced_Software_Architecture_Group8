@@ -4,9 +4,21 @@ services:
 
 #### Services ####
 
+  api:
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8090:80"
+    depends_on:
+      - mongo
+
   scheduler:
     container_name: scheduler
-    image: ghcr.io/worldfam/scheduler:latest
+    build:
+      context: ./scheduler
+      dockerfile: Dockerfile
     ports:
       - "9090:9090"
     depends_on:
@@ -14,7 +26,9 @@ services:
 
   supply:
     container_name: supply
-    image: ghcr.io/worldfam/supply:latest
+    build:
+      context: ./supply
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "9093:9093"
@@ -43,6 +57,14 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
 
 ### Middleware ####
 
@@ -86,3 +108,4 @@ services:
 
 volumes:
   mysql_data:
+  mongodb-data:
