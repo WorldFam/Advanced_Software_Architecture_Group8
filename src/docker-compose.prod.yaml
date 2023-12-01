@@ -5,24 +5,27 @@ services:
 #### Services ####
 
   scheduler:
-    image: ghcr.io/worldfam/scheduler:latest
     container_name: scheduler
+    image: ghcr.io/worldfam/scheduler:latest
     ports:
       - "9090:9090"
     depends_on:
       - kafka
 
   supply:
-    image: ghcr.io/worldfam/supply:latest
     container_name: supply
+    image: ghcr.io/worldfam/supply:latest
+    restart: always
     ports:
       - "9093:9093"
     depends_on:
       - mysql
 
-  production:  
-    image: ghcr.io/worldfam/production:latest
+  production:
     container_name: production
+    build:
+      context: ./production
+      dockerfile: Dockerfile
     ports: 
       - "9091:9091"
     depends_on:
@@ -31,7 +34,8 @@ services:
 ### Databases ####
 
   mysql:
-    image: mysql:latest
+    container_name: mysql
+    image: mysql:8.1
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: supply
@@ -43,8 +47,9 @@ services:
 ### Middleware ####
 
   flyway:
+    container_name: flyway
     image: flyway/flyway:latest
-    command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 migrate
+    command: -url=jdbc:mysql://mysql:3306/supply -user=root -password=password -connectRetries=60 -baselineOnMigrate=true migrate
     depends_on:
       - mysql
     volumes:
@@ -58,29 +63,19 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:29092
+      KAFKA_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     depends_on:
       - zookeeper
-    volumes:
-      - kafka-data:/var/lib/kafka/data
 
   zookeeper:
     container_name: zookeeper
     image: confluentinc/cp-zookeeper:latest
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-    ports:
-      - "2181:2181"
-    volumes:
-      - zookeeper-data:/var/lib/zookeeper/data
-      - zookeeper-logs:/var/lib/zookeeper/log
 
 volumes:
-  kafka-data:
-  zookeeper-data:
-  zookeeper-logs:
   mysql_data:
