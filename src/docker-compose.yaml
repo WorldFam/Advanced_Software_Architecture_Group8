@@ -23,7 +23,9 @@ services:
 
   production:
     container_name: production
-    image: ghcr.io/worldfam/production:latest
+    build:
+      context: ./production
+      dockerfile: Dockerfile
     ports: 
       - "9091:9091"
     depends_on:
@@ -68,29 +70,19 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:29092
+      KAFKA_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     depends_on:
       - zookeeper
-    volumes:
-      - kafka-data:/var/lib/kafka/data
 
   zookeeper:
     container_name: zookeeper
     image: confluentinc/cp-zookeeper:latest
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-    ports:
-      - "2181:2181"
-    volumes:
-      - zookeeper-data:/var/lib/zookeeper/data
-      - zookeeper-logs:/var/lib/zookeeper/log
 
 volumes:
-  kafka-data:
-  zookeeper-data:
-  zookeeper-logs:
   mysql_data:
