@@ -2,7 +2,9 @@ name: CI/CD Workflow
 
   # Workflow triggers
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - master
 
   # Environment Variables
 env:
