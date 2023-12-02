@@ -6,12 +6,12 @@ using System.Text.Json;
 
 [Route("api/[controller]")]
 [ApiController]
-public class OrdersController : ControllerBase
+public class OrderController : ControllerBase
 {
     private readonly IMongoCollection<Order> _orderCollection;
     private readonly OrderConsumerService _orderConsumerService;
 
-    public OrdersController(IMongoCollection<Order> orderCollection, OrderConsumerService orderConsumerService)
+    public OrderController(IMongoCollection<Order> orderCollection, OrderConsumerService orderConsumerService)
     {
         _orderCollection = orderCollection;
         _orderConsumerService = orderConsumerService;

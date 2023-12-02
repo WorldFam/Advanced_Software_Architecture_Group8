@@ -16,6 +16,16 @@ public class Startup
         services.AddControllers();
         services.AddScoped<OrderConsumerService>();
 
+        // Add CORS
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy",
+                builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+        });
+
         // Configure MongoDB
         var mongoConnectionString = Configuration.GetConnectionString("MongoDb");
         services.AddSingleton<IMongoClient>(new MongoClient(mongoConnectionString));
@@ -39,6 +49,7 @@ public class Startup
         }
 
         app.UseRouting();
+        app.UseCors("CorsPolicy");
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
