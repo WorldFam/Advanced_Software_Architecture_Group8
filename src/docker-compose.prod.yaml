@@ -4,11 +4,17 @@ services:
 
 #### Services ####
 
+  order:
+    container_name: order-ui
+    image: ghcr.io/worldfam/order-ui:latest
+    ports:
+      - "80:80"
+
   api:
     container_name: api
     image: ghcr.io/worldfam/api:latest
     ports:
-      - "8090:80"
+      - "8090:8090"
     depends_on:
       - mongo
 

@@ -4,13 +4,21 @@ services:
 
 #### Services ####
 
+  order:
+    container_name: order-ui
+    build:
+      context: ./order-ui
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+
   api:
     container_name: api
     build:
       context: ./api
       dockerfile: Dockerfile
     ports:
-      - "8090:80"
+      - "8090:8090"
     depends_on:
       - mongo
 
