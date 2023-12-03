@@ -1,9 +1,10 @@
-from channel.kafka_consumer import KafkaConsumer
-from service.base_production_line_service import BaseProductionLineService
+from subscriber.mqtt_subscriber import MQTTSubscriber
+from service.production_line import BaseProductionLineService
 
 production = BaseProductionLineService("Packaging")
 
-consumer = KafkaConsumer(broker="kafka:9092", 
-                         topic="order-topic", callback_function=production.start_production_line)
+mqtt_subscriber = MQTTSubscriber(broker="mosquitto",
+                                  topic="order-topic",
+                                  callback_function=production.start_production_line)
 
-consumer.consume_messages()
+mqtt_subscriber.consume_messages()
