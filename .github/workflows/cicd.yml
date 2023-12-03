@@ -39,6 +39,7 @@ jobs:
           name: deployment-artifact
           path: |
             ./src/docker-compose.prod.yaml
+            ./src/mosquitto.conf
 
   # Perform linting and/or other static code analysis
   code-analysis:
@@ -285,6 +286,10 @@ jobs:
       - name: Transfer docker-compose to server
         run: |
           scp -o StrictHostKeyChecking=no -i private_key.pem ./src/docker-compose.prod.yaml ${{ env.SSH_USERNAME }}@${{ env.SERVER_IP }}:./
+
+      - name: Transfer mosquitto config to server
+        run: |
+          scp -o StrictHostKeyChecking=no -i private_key.pem ./src/mosquitto.conf ${{ env.SSH_USERNAME }}@${{ secrets.SERVER_IP }}:./
 
       - name: Run Docker Login and Pull on VM
         run: |
