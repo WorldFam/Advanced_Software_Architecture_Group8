@@ -8,6 +8,10 @@
 if prompts are not visible execute commad `bash entrypoint.sh` inside the container
 
 Remember to connect to the VPN if not using school network!!  
+# Architecture diagram
+
+![image](https://github.com/WorldFam/Advanced_Software_Architecture_Group8/assets/55923499/5e887a53-d615-44b4-8ea3-ac40bea647c5)
+
 # Advanced Software Architecture Portfolio Template
 
 - [Introduction](#introduction)
