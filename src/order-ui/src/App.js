@@ -26,18 +26,9 @@ function App() {
       const resultStr = textDecoder.decode(receivedData);
       const parsedData = JSON.parse(resultStr);
       setLogs((prevLogs) => [...prevLogs, parsedData]);
-    });
-  
-    socket.addEventListener("error", (error) => {
-      console.error("WebSocket error:", error);
-    });
-  
-    socket.addEventListener("close", (event) => {
-      console.log("WebSocket connection closed:", event);
-    });
+    })
   
     return () => {
-      console.log("Cleaning up WebSocket connection");
       socket.close();
     };
   
@@ -86,13 +77,6 @@ function App() {
     <div className="app-container">
     <div className="order-form-container">
     <h1>New Order</h1>
-      <ul className="order-list">
-        {orders.map((order, index) => (
-          <li
-            key={index}
-          >{`${order.customer} - Size: ${order.size}, Amount: ${order.amount}`}</li>
-        ))}
-      </ul>
       <form onSubmit={handleSubmit} className="order-form">
         <div className="form-group">
           <label htmlFor="customer">Customer:</label>
@@ -134,9 +118,32 @@ function App() {
           Place Order
         </button>
       </form>    </div>
-    <div className="logs-container">
-      <h1>Order Progress</h1>
-      <table className="logs-table">
+      <div className="logs-container">
+        <h1>Orders</h1>
+        <table className="logs-table">
+          <thead>
+            <tr>
+              <th>OrderId</th>
+              <th>Customer</th>
+              <th>Size</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order, index) => (
+              <tr key={index}>
+                <td>{order.id}</td>
+                <td>{order.customer}</td>
+                <td>{order.size}</td>
+                <td>{order.amount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    <div className="log-container">
+      <h1>Orders Progress</h1>
+      <table className="log-table">
         <thead>
           <tr>
             <th>OrderId</th>

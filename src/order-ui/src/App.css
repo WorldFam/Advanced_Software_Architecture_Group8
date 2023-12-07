@@ -52,7 +52,7 @@
 }
 
 .submit-button {
-  background-color: #001f3f; /* Dark Blue */
+  background-color: #001f3f;
   color: white;
   padding: 10px;
   border: none;
@@ -61,28 +61,29 @@
 }
 
 .submit-button:hover {
-  background-color: #003366; /* Slightly lighter shade of dark blue on hover */
+  background-color: #003366;
 }
 
 .app-container {
   display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line on small screens */
-}
+  flex-wrap: wrap; 
 
 .order-form-container {
   width: 100%;
-  max-width: 400px; /* Maintain a maximum width for larger screens */
+  max-width: 400px; 
   margin: 20px auto;
 }
 
 .logs-container {
   width: 100%;
   padding: 20px;
-  box-sizing: border-box; /* Include padding and border in the total width */
+  box-sizing: border-box; 
   text-align: center;
+  max-height: 300px; 
+  overflow-y: auto;
+  
 }
 
-/* Use a media query to adjust styles for smaller screens */
 @media screen and (min-width: 768px) {
   .app-container {
     justify-content: space-between;
@@ -108,3 +109,22 @@
   padding: 8px;
   text-align: left;
 }
+
+.log-container {
+  width: 100%;
+  padding-inline: 20px;
+  text-align: center;
+  
+}
+
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.log-table th,
+.log-table td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}}
