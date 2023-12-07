@@ -3,7 +3,7 @@ from threading import Thread
 import time
 
 from model.model import Order
-
+SERVICE="Production"
 
 # Production line
 class BaseProductionLineService:
@@ -25,28 +25,6 @@ class BaseProductionLineService:
             return {'message': f'Countdown started from {start_number}.'}
         else:
             return {'message': 'Countdown is already running.'}
-
-    def pause_production_line(self):
-        if self.countdown_thread and self.countdown_thread.is_alive():
-            self.paused = True
-            return {'message': 'Countdown paused.'}
-        else:
-            return {'message': 'No countdown running to pause.'}
-
-    def resume_production_line(self):
-        if self.countdown_thread and self.countdown_thread.is_alive():
-            self.paused = False
-            return {'message': 'Countdown resumed.'}
-        else:
-            return {'message': 'No countdown running to resume.'}
-
-    def stop_production_line(self):
-        if self.countdown_thread and self.countdown_thread.is_alive():
-            self.stopped.set()
-            self.countdown_thread.join()
-            return {'message': 'Countdown stopped.'}
-        else:
-            return {'message': 'No countdown running to stop.'}
 
     def get_status(self):
         return {'current_number': self.current_number, 'paused': self.paused, 'stopped': self.stopped.is_set()}

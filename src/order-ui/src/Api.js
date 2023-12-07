@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8090';  // Docker Compose service name
+const BASE_URL = 'http://api:8090';  // Docker Compose service name
 
 export const fetchData = async () => {
     const response = await fetch(`${BASE_URL}/api/order`);
