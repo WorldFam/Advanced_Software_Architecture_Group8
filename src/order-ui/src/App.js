@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchData, postData } from "./Api";
+import { fetchData, fetchResourceData, postData } from "./Api";
 import "./App.css";
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
   });
   const [validationError, setValidationError] = useState({});
   const [logs, setLogs] = useState([]);
+  const [resources, setResources] = useState([]);
 
   useEffect(() => {
     const socket = new WebSocket("ws://localhost:8765");
@@ -42,6 +43,15 @@ function App() {
       .catch((error) => {
         console.error("Error fetching orders:", error);
       });
+
+    fetchResourceData()
+      .then((result) => {
+        setResources(result);
+      })
+      .catch((error) => {
+        console.error("Error fetching resources:", error);
+      });
+
   }, []);
 
   const handleInputChange = (e) => {
@@ -49,6 +59,11 @@ function App() {
     setValidationError({});
   };
 
+  const handleDropdownChange = (selectedSize) => {
+    setNewOrder({ ...newOrder, size: selectedSize });
+    setValidationError({});
+  };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
   
@@ -79,7 +94,7 @@ function App() {
     <h1>New Order</h1>
       <form onSubmit={handleSubmit} className="order-form">
         <div className="form-group">
-          <label htmlFor="customer">Customer:</label>
+          <label htmlFor="customer" className="form-label">Customer:</label>
           <input
             type="text"
             id="customer"
@@ -90,18 +105,24 @@ function App() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="size">Size:</label>
-          <input
-            type="text"
-            id="size"
-            name="size"
-            value={newOrder.size}
-            onChange={handleInputChange}
-            className={`form-input ${validationError.size ? "error" : ""}`}
-          />
-        </div>
+            <label htmlFor="size" className="form-label">Size:</label>
+              <select
+                id="size"
+                name="size"
+                value={newOrder.size}
+                onChange={(e) => handleDropdownChange(e.target.value)}
+                className={`form-input dropdown ${validationError.size ? "error" : ""}`}
+              >
+                <option value="" disabled>Select Size</option>
+                {resources.map((resource) => (
+                  <option key={resource.id} value={resource.size}>
+                    {resource.size}  (Left: {resource.amount})
+                  </option>
+                ))}
+              </select>
+            </div>
         <div className="form-group">
-          <label htmlFor="amount">Amount:</label>
+          <label htmlFor="amount" className="form-label">Amount:</label>
           <input
             type="text"
             id="amount"
@@ -127,6 +148,7 @@ function App() {
               <th>Customer</th>
               <th>Size</th>
               <th>Amount</th>
+              <th>Timestamp</th>
             </tr>
           </thead>
           <tbody>
@@ -136,6 +158,7 @@ function App() {
                 <td>{order.customer}</td>
                 <td>{order.size}</td>
                 <td>{order.amount}</td>
+                <td>{order.timestamp}</td>
               </tr>
             ))}
           </tbody>
