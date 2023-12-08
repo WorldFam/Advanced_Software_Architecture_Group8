@@ -1,10 +1,10 @@
 from subscriber.mqtt_subscriber import MQTTSubscriber
-from service.production_line import BaseProductionLineService
+import asyncio
 
-production = BaseProductionLineService("Packaging")
+# MQTT configuration
+mqtt_broker_address = "mosquitto"
+mqtt_topic = "order-topic"
 
-mqtt_subscriber = MQTTSubscriber(broker="mosquitto",
-                                  topic="order-topic",
-                                  callback_function=production.start_production_line)
-
-mqtt_subscriber.consume_messages()
+if __name__ == "__main__":
+    mqtt_subscriber = MQTTSubscriber(mqtt_broker_address, mqtt_topic)
+    asyncio.run(mqtt_subscriber.subscribe())

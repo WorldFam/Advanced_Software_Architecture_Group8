@@ -4,13 +4,21 @@ services:
 
 #### Services ####
 
-  order:
+  order-ui:
     container_name: order-ui
     build:
       context: ./order-ui
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "3000:3000"
+
+  logging:
+    container_name: logging
+    build:
+      context: ./logging
+      dockerfile: Dockerfile
+    ports:
+      - "8765:8765"
 
   api:
     container_name: api
@@ -30,7 +38,7 @@ services:
     ports:
       - "9090:9090"
     depends_on:
-      - kafka
+      - mosquitto
 
   supply:
     container_name: supply
@@ -42,6 +50,7 @@ services:
       - "9093:9093"
     depends_on:
       - mysql
+      - flyway
 
   production:
     container_name: production
@@ -51,7 +60,7 @@ services:
     ports: 
       - "9091:9091"
     depends_on:
-      - kafka
+      - mosquitto
 
 ### Databases ####
 
@@ -68,7 +77,7 @@ services:
 
   mongo:
     container_name: mongo
-    image: mongo
+    image: mongo:latest
     ports:
       - "27017:27017"
     volumes:
@@ -84,35 +93,14 @@ services:
       - mysql
     volumes:
       - ./flyway-scripts:/flyway/sql
-
-  kafka-consumer:
-    container_name: kafka-consumer
-    image: confluentinc/cp-kafka:latest
-    command: ["kafka-console-consumer", "--bootstrap-server", "kafka:9092", "--topic", "order-topic", "--from-beginning"]
-    depends_on:
-      - kafka
   
-  kafka:
-    container_name: kafka
-    image: confluentinc/cp-kafka:latest
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
     ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:29092
-      KAFKA_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:29092
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zookeeper
-
-  zookeeper:
-    container_name: zookeeper
-    image: confluentinc/cp-zookeeper:latest
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
 
 volumes:
   mysql_data:

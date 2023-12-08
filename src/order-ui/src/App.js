@@ -43,7 +43,9 @@ function App() {
       .catch((error) => {
         console.error("Error fetching orders:", error);
       });
+  }, [setOrders]);
 
+  useEffect(() => {
     fetchResourceData()
       .then((result) => {
         setResources(result);
@@ -52,7 +54,7 @@ function App() {
         console.error("Error fetching resources:", error);
       });
 
-  }, []);
+  }, [setResources]);
 
   const handleInputChange = (e) => {
     setNewOrder({ ...newOrder, [e.target.name]: e.target.value });
@@ -78,8 +80,16 @@ function App() {
   
     postData(newOrder)
       .then(() => fetchData())
-      .then((result) => {
+      .then(() => {
+
+        fetchData().then((result) => {
         setOrders(result);
+        });
+
+        fetchResourceData().then((result) => {
+        setResources(result);
+        });
+
         setNewOrder({ customer: "", size: "", amount: "" });
         setValidationError({});
       })
@@ -124,7 +134,7 @@ function App() {
         <div className="form-group">
           <label htmlFor="amount" className="form-label">Amount:</label>
           <input
-            type="text"
+            type="number" min="1" step="1"
             id="amount"
             name="amount"
             value={newOrder.amount}

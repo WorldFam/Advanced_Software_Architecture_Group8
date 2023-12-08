@@ -1,34 +1,36 @@
-import paho.mqtt.client as mqtt
 import json
+from asyncio_mqtt import Client, MqttError
+from service.production_line import BaseProductionLineService
+
+filling = BaseProductionLineService("Filling")
+labeling = BaseProductionLineService("Labeling")
+packaging = BaseProductionLineService("Packaging")
+from service.websocket import send_message
+from model.log import Log
 
 class MQTTSubscriber:
-    def __init__(self, broker, topic, callback_function):
-        self.client = mqtt.Client()
-        self.broker = broker
+    def __init__(self, broker_address, topic):
+        self.broker_address = broker_address
         self.topic = topic
-        self.callback_function = callback_function
 
-    def on_message(self, client, userdata, msg):
+    async def on_message(self, client, topic, message):
         try:
-            # Process the message
-            order = json.loads(msg.payload.decode('utf-8'))
-            print(f"Received message: {order}")
-            self.callback_function(order)
+            order = json.loads(message.payload.decode('utf-8'))
+            await filling.start_production_line(order)
+            await labeling.start_production_line(order)
+            await packaging.start_production_line(order)
+            await send_message(Log(orderId=order.get('id'), process="Order completed"))
+
         except Exception as e:
             print(f"An unexpected error occurred: {str(e)}")
 
-    def consume_messages(self):
-        try:
-            # Set up the connection to the MQTT broker
-            self.client.connect(self.broker, 1883, 300)
-            self.client.on_message = self.on_message
-            self.client.subscribe(self.topic)
-            
-            # Start the MQTT loop to listen for messages
-            self.client.loop_forever()
+    async def subscribe(self):
+        async with Client(self.broker_address) as client:
+            try:
+                async with client.messages() as messages:
+                    await client.subscribe(self.topic)
+                    async for message in messages:
+                        await self.on_message(client, message.topic, message)
 
-        except Exception as e:
-            print(f"An unexpected error occurred: {str(e)}")
-        finally:
-            # Disconnect from the MQTT broker
-            self.client.disconnect()
+            except MqttError as e:
+                print(f"MQTT error: {e}")
