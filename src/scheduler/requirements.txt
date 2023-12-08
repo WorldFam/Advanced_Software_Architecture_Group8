@@ -2,5 +2,5 @@ fastapi==0.104.1
 uvicorn==0.15.0
 pydantic==1.8.2
 requests==2.26.0
-paho-mqtt==1.6.1
+asyncio-mqtt==0.10.0
 websockets==9.1

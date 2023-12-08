@@ -30,7 +30,7 @@ async def place_order(order: Order):
 
         if response.status_code == 200:
             await send_message(Log(orderId=order.id, process="Enough supplies proceeding with the order"))
-            publish_message('order-topic', order)
+            await publish_message('order-topic', order)
             await send_message(Log(orderId=order.id, process="Order sent to production successfully"))
 
         else: 

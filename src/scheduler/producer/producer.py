@@ -1,13 +1,12 @@
-import paho.mqtt.client as mqtt
 import json
+from asyncio_mqtt import Client, MqttError
 
-client = mqtt.Client()
-client.connect("mosquitto", 1883, 60)
-
-def publish_message(topic, message):
+async def publish_message(topic, message):
     try:
-        serialized_message = json.dumps(message.__dict__).encode('utf-8')
-        client.publish(topic, serialized_message)
-        print(f"Message sent to topic '{topic}': {message}")
-    except Exception as e:
-        print(f"Failed to send message to topic '{topic}': {str(e)}")
+        async with Client('mosquitto') as client:
+            serialized_message = message.json().encode('utf-8')
+            await client.publish(topic, payload=serialized_message)
+            print(f"Message sent to topic '{topic}': {message}")
+    except MqttError as e:
+        print(f"Failed to communicate with MQTT broker: {str(e)}")
+        raise
