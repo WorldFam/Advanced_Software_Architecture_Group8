@@ -1,3 +1,4 @@
+com\example\supply\CorsConfig.class
 com\example\supply\Resource.class
 com\example\supply\ResourceEntity.class
 com\example\supply\SupplyService.class
