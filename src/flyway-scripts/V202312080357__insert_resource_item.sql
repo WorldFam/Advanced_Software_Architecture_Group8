@@ -1,0 +1,1 @@
+INSERT INTO resource (size, amount) VALUES ('1L', 10000);
