@@ -1,7 +1,7 @@
 # Initialize and start a new runner for deployment to VM
 
 - Pull runner image from github container registry `docker pull ghcr.io/worldfam/github-runner:v1.3`
-- Run container from image `docker run -e ghcr.io/worldfam/github-runner:v1.3`
+- Run container from image `docker run -i ghcr.io/worldfam/github-runner:v1.3`
 - Enter REPO_URL: `https://github.com/WorldFam/Advanced_Software_Architecture_Group8`
 - Enter TOKEN: `<REQUEST_TOKEN_FROM_REPO_OWNER>`
 
