@@ -4,7 +4,6 @@ import json
 client = mqtt.Client()
 client.connect("mosquitto", 1883, 60)
 
-# Function to publish a message to the Kafka topic
 def publish_message(topic, message):
     try:
         serialized_message = json.dumps(message.__dict__).encode('utf-8')
