@@ -1,0 +1,3 @@
+locust
+locust_plugins
+asyncio-mqtt

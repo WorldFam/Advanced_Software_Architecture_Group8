@@ -102,6 +102,15 @@ services:
     volumes:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
 
+  locust:
+    build: ./locust
+    container_name: locust
+    command: locust -f mqtt_locustfile.py
+    ports:
+      - "8089:8089"
+    links:
+      - mosquitto
+
 volumes:
   mysql_data:
   mongodb-data:

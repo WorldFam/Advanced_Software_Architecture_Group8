@@ -15,12 +15,14 @@ class BaseProductionLineService:
 
     async def countdown(self, start_number, name, order):
         self.current_number = start_number
+        print(f"Remaining bottles at {name}: {self.current_number}")
         await self.send_log(order, name)
-        
+
         while self.current_number > 0:
                 self.current_number -= 1
                 await asyncio.sleep(1)
                 if self.current_number > 0: 
+                    print(f"Remaining bottles at {name}: {self.current_number}")
                     await self.send_log(order, name)
 
     async def send_log(self, order, name):
