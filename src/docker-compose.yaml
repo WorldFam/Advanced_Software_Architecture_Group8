@@ -103,7 +103,7 @@ services:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
 
   locust:
-    build: ./locust
+    build: ./tests/locust
     container_name: locust
     command: locust -f mqtt_locustfile.py
     ports:

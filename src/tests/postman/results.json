@@ -1,0 +1,1454 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "d09fad8f-26cd-448e-b891-3d1a823fbd90",
+      "exporter_id": "13197396"
+    },
+    "item": [
+      {
+        "id": "35c7f2ae-452e-4706-86f5-367093f47ca9",
+        "name": "use resource",
+        "request": {
+          "description": {
+            "content": "This endpoint allows you to make an HTTP POST request to [http://localhost:9093/supply](http://localhost:9093/supply) in order to supply a certain size and amount.\n\n### Request Body\n\n- `size` (string): The size of the supply.\n- `amount` (number): The amount of the supply.\n    \n\n### Response\n\nThe last execution of this request returned a status code of 405, along with the following response body:\n\n``` json\n{\n    \"timestamp\": 0,\n    \"status\": 0,\n    \"error\": \"\",\n    \"path\": \"\"\n}\n\n ```",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "9093",
+            "path": [
+              "supply"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"size\" : \"5L\",\r\n    \"amount\" : 64\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "885d6867-aeb3-454d-9af6-58b5078362ad",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Response status code is 405\", function () {\r",
+                "    pm.response.to.have.status(405);\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Response has the required fields\", function () {\r",
+                "    const responseData = pm.response.json();\r",
+                "    \r",
+                "    pm.expect(responseData).to.be.an('object');\r",
+                "    pm.expect(responseData).to.have.property('timestamp');\r",
+                "    pm.expect(responseData).to.have.property('status');\r",
+                "    pm.expect(responseData).to.have.property('error');\r",
+                "    pm.expect(responseData).to.have.property('path');\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Timestamp is a valid timestamp format\", function () {\r",
+                "    const responseData = pm.response.json();\r",
+                "    \r",
+                "    pm.expect(responseData.timestamp).to.match(/^\\d+$/);\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Error message should not be empty\", function () {\r",
+                "  const responseData = pm.response.json();\r",
+                "  \r",
+                "  pm.expect(responseData.error).to.exist.and.to.not.be.empty;\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Content-Type is application/json\", function () {\r",
+                "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                "});"
+              ],
+              "_lastExecutionId": "3c62daad-e43e-49fb-b783-c788b63020ad"
+            }
+          }
+        ]
+      },
+      {
+        "id": "f85259f5-b22c-4ecd-8b56-dd164cd8b8b9",
+        "name": "update resource",
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "9093",
+            "path": [
+              "resource",
+              "1"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [
+              {
+                "key": "amount",
+                "value": "500"
+              }
+            ],
+            "variable": []
+          },
+          "method": "PATCH",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"amount\" : 16\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "2b66fbaf-9cff-4f45-b1b9-04918570b36e",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Response status code is 200', function () {\r",
+                "    pm.response.to.have.status(200);\r",
+                "})\r",
+                "\r",
+                "pm.test('Response body is empty', function () {\r",
+                "    const responseData = pm.response.text();\r",
+                "    pm.expect(responseData).to.be.empty;\r",
+                "})"
+              ],
+              "_lastExecutionId": "4bbe5ddc-a0c6-4268-9631-507ab6cbafef"
+            }
+          }
+        ]
+      },
+      {
+        "id": "eaa6ce52-fee6-4b77-8fce-cd59177816a2",
+        "name": "add resource",
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "9093",
+            "path": [
+              "resource"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"size\" : \"5L\",\r\n    \"amount\" : 64\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "28c56b91-0cb4-417a-95af-f5b03b52a5cc",
+              "type": "text/javascript",
+              "exec": [
+                "// Fixed status code and content type tests\r",
+                "pm.test(\"Response status code is 500\", function () {\r",
+                "    pm.response.to.have.status(500);\r",
+                "});\r",
+                "\r",
+                "pm.test(\"Content-Type header is application/json\", function () {\r",
+                "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                "});\r",
+                "\r",
+                "// Removed redundant response body test"
+              ],
+              "_lastExecutionId": "c907d250-f816-429f-9438-a99bdb0f66a6"
+            }
+          }
+        ]
+      },
+      {
+        "id": "3057ce0f-7ee9-426a-b9c7-2d3ddd950f56",
+        "name": "get resource",
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "9093",
+            "path": [
+              "resource"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "method": "GET"
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "d32ceb1e-c784-4739-87fe-250c202a7548",
+              "type": "text/javascript",
+              "exec": [
+                "\r",
+                "pm.test(\"Response status code is 200\", function () {\r",
+                "    pm.expect(pm.response.code).to.equal(200);\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Response has the required fields - id, size, and amount\", function () {\r",
+                "  const responseData = pm.response.json();\r",
+                "  \r",
+                "  pm.expect(responseData).to.be.an('array');\r",
+                "  responseData.forEach(function(item) {\r",
+                "    pm.expect(item).to.have.property('id');\r",
+                "    pm.expect(item).to.have.property('size');\r",
+                "    pm.expect(item).to.have.property('amount');\r",
+                "  });\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Size is a non-empty string\", function () {\r",
+                "  const responseData = pm.response.json();\r",
+                "  \r",
+                "  pm.expect(responseData).to.be.an('array');\r",
+                "  responseData.forEach(function(item) {\r",
+                "    pm.expect(item.size).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Size should not be empty\");\r",
+                "  });\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Amount is a non-negative integer\", function () {\r",
+                "    const responseData = pm.response.json();\r",
+                "\r",
+                "    pm.expect(responseData).to.be.an('array');\r",
+                "    responseData.forEach(function(item) {\r",
+                "        pm.expect(item.amount).to.be.a('number').and.to.be.at.least(0);\r",
+                "    });\r",
+                "});\r",
+                "\r",
+                "\r",
+                "pm.test(\"Content-Type header is application/json\", function () {\r",
+                "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                "});\r",
+                "\r",
+                "var template = `\r",
+                "<div>\r",
+                "    <p>Status: {{response.status}}</p>\r",
+                "    <p>Error: {{response.error}}</p>\r",
+                "</div>\r",
+                "`;\r",
+                "\r",
+                "function constructVisualizerPayload() {\r",
+                "    return {response: pm.response.json()};\r",
+                "}\r",
+                "\r",
+                "pm.visualizer.set(template, constructVisualizerPayload());"
+              ],
+              "_lastExecutionId": "c60684e4-9d00-4ccc-821f-8024b0edf461"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [],
+    "variable": [],
+    "info": {
+      "_postman_id": "d09fad8f-26cd-448e-b891-3d1a823fbd90",
+      "name": "Supply",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "id": "e2829e33-219d-4c25-bb34-38df3612f42e",
+    "values": []
+  },
+  "globals": {
+    "id": "206804a1-e268-4bd8-965d-6600e858c6e5",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 14,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 0,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 37.25,
+      "responseMin": 20,
+      "responseMax": 49,
+      "responseSd": 11.188722000300123,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1702416086527,
+      "completed": 1702416087077
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 4,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "85d48a0a-ac95-49a8-98a3-05135a364db9",
+          "httpRequestId": "ec19e011-8e51-45c8-943e-2207e926f97d"
+        },
+        "item": {
+          "id": "35c7f2ae-452e-4706-86f5-367093f47ca9",
+          "name": "use resource",
+          "request": {
+            "description": {
+              "content": "This endpoint allows you to make an HTTP POST request to [http://localhost:9093/supply](http://localhost:9093/supply) in order to supply a certain size and amount.\n\n### Request Body\n\n- `size` (string): The size of the supply.\n- `amount` (number): The amount of the supply.\n    \n\n### Response\n\nThe last execution of this request returned a status code of 405, along with the following response body:\n\n``` json\n{\n    \"timestamp\": 0,\n    \"status\": 0,\n    \"error\": \"\",\n    \"path\": \"\"\n}\n\n ```",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "http",
+              "port": "9093",
+              "path": [
+                "supply"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"size\" : \"5L\",\r\n    \"amount\" : 64\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "885d6867-aeb3-454d-9af6-58b5078362ad",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Response status code is 405\", function () {\r",
+                  "    pm.response.to.have.status(405);\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Response has the required fields\", function () {\r",
+                  "    const responseData = pm.response.json();\r",
+                  "    \r",
+                  "    pm.expect(responseData).to.be.an('object');\r",
+                  "    pm.expect(responseData).to.have.property('timestamp');\r",
+                  "    pm.expect(responseData).to.have.property('status');\r",
+                  "    pm.expect(responseData).to.have.property('error');\r",
+                  "    pm.expect(responseData).to.have.property('path');\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Timestamp is a valid timestamp format\", function () {\r",
+                  "    const responseData = pm.response.json();\r",
+                  "    \r",
+                  "    pm.expect(responseData.timestamp).to.match(/^\\d+$/);\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Error message should not be empty\", function () {\r",
+                  "  const responseData = pm.response.json();\r",
+                  "  \r",
+                  "  pm.expect(responseData.error).to.exist.and.to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Content-Type is application/json\", function () {\r",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "3c62daad-e43e-49fb-b783-c788b63020ad"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "This endpoint allows you to make an HTTP POST request to [http://localhost:9093/supply](http://localhost:9093/supply) in order to supply a certain size and amount.\n\n### Request Body\n\n- `size` (string): The size of the supply.\n- `amount` (number): The amount of the supply.\n    \n\n### Response\n\nThe last execution of this request returned a status code of 405, along with the following response body:\n\n``` json\n{\n    \"timestamp\": 0,\n    \"status\": 0,\n    \"error\": \"\",\n    \"path\": \"\"\n}\n\n ```",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "9093",
+            "path": [
+              "supply"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.33.0",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "a5833d4d-c73a-4eff-b6f0-a53fc6f7126f",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:9093",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "43",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"size\" : \"5L\",\r\n    \"amount\" : 64\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "54fb82ee-011c-46d2-94a2-d7a049801101",
+          "status": "Method Not Allowed",
+          "code": 405,
+          "header": [
+            {
+              "key": "Allow",
+              "value": "PATCH"
+            },
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 12 Dec 2023 21:21:26 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              116,
+              105,
+              109,
+              101,
+              115,
+              116,
+              97,
+              109,
+              112,
+              34,
+              58,
+              49,
+              55,
+              48,
+              50,
+              52,
+              49,
+              54,
+              48,
+              56,
+              54,
+              54,
+              48,
+              52,
+              44,
+              34,
+              115,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              52,
+              48,
+              53,
+              44,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              77,
+              101,
+              116,
+              104,
+              111,
+              100,
+              32,
+              78,
+              111,
+              116,
+              32,
+              65,
+              108,
+              108,
+              111,
+              119,
+              101,
+              100,
+              34,
+              44,
+              34,
+              112,
+              97,
+              116,
+              104,
+              34,
+              58,
+              34,
+              47,
+              115,
+              117,
+              112,
+              112,
+              108,
+              121,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 49,
+          "responseSize": 86
+        },
+        "id": "35c7f2ae-452e-4706-86f5-367093f47ca9",
+        "assertions": [
+          {
+            "assertion": "Response status code is 405",
+            "skipped": false
+          },
+          {
+            "assertion": "Response has the required fields",
+            "skipped": false
+          },
+          {
+            "assertion": "Timestamp is a valid timestamp format",
+            "skipped": false
+          },
+          {
+            "assertion": "Error message should not be empty",
+            "skipped": false
+          },
+          {
+            "assertion": "Content-Type is application/json",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "19626527-5734-44ba-9169-99a3f8a46719",
+          "length": 4,
+          "cycles": 1,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "c89fdcd5-5593-402c-a3db-22c23f070cc3"
+        },
+        "item": {
+          "id": "f85259f5-b22c-4ecd-8b56-dd164cd8b8b9",
+          "name": "update resource",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "9093",
+              "path": [
+                "resource",
+                "1"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [
+                {
+                  "key": "amount",
+                  "value": "500"
+                }
+              ],
+              "variable": []
+            },
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount\" : 16\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "2b66fbaf-9cff-4f45-b1b9-04918570b36e",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Response status code is 200', function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "})\r",
+                  "\r",
+                  "pm.test('Response body is empty', function () {\r",
+                  "    const responseData = pm.response.text();\r",
+                  "    pm.expect(responseData).to.be.empty;\r",
+                  "})"
+                ],
+                "_lastExecutionId": "4bbe5ddc-a0c6-4268-9631-507ab6cbafef"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "9093",
+            "path": [
+              "resource",
+              "1"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [
+              {
+                "key": "amount",
+                "value": "500"
+              }
+            ],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.33.0",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "58b83af7-94e0-4565-a69d-03ae659abc01",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:9093",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "23",
+              "system": true
+            }
+          ],
+          "method": "PATCH",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"amount\" : 16\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "860cfdf5-5633-49d7-9a37-d0c84811809d",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "Content-Length",
+              "value": "0"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 12 Dec 2023 21:21:26 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": []
+          },
+          "cookie": [],
+          "responseTime": 35,
+          "responseSize": 0
+        },
+        "id": "f85259f5-b22c-4ecd-8b56-dd164cd8b8b9",
+        "assertions": [
+          {
+            "assertion": "Response status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Response body is empty",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "7e531e41-99a0-4e0e-9961-c0075845877c",
+          "length": 4,
+          "cycles": 1,
+          "position": 2,
+          "iteration": 0,
+          "httpRequestId": "18093837-dcdc-42ed-8a4f-4428d503df13"
+        },
+        "item": {
+          "id": "eaa6ce52-fee6-4b77-8fce-cd59177816a2",
+          "name": "add resource",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "9093",
+              "path": [
+                "resource"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"size\" : \"5L\",\r\n    \"amount\" : 64\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "28c56b91-0cb4-417a-95af-f5b03b52a5cc",
+                "type": "text/javascript",
+                "exec": [
+                  "// Fixed status code and content type tests\r",
+                  "pm.test(\"Response status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Content-Type header is application/json\", function () {\r",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "});\r",
+                  "\r",
+                  "// Removed redundant response body test"
+                ],
+                "_lastExecutionId": "c907d250-f816-429f-9438-a99bdb0f66a6"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "9093",
+            "path": [
+              "resource"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.33.0",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "a786ede0-1de7-469c-8f1a-0abde544c36d",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:9093",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "43",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"size\" : \"5L\",\r\n    \"amount\" : 64\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "de259d75-110d-4e49-b04a-b8bba8c4abc7",
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 12 Dec 2023 21:21:26 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              116,
+              105,
+              109,
+              101,
+              115,
+              116,
+              97,
+              109,
+              112,
+              34,
+              58,
+              49,
+              55,
+              48,
+              50,
+              52,
+              49,
+              54,
+              48,
+              56,
+              54,
+              56,
+              55,
+              55,
+              44,
+              34,
+              115,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              53,
+              48,
+              48,
+              44,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              73,
+              110,
+              116,
+              101,
+              114,
+              110,
+              97,
+              108,
+              32,
+              83,
+              101,
+              114,
+              118,
+              101,
+              114,
+              32,
+              69,
+              114,
+              114,
+              111,
+              114,
+              34,
+              44,
+              34,
+              112,
+              97,
+              116,
+              104,
+              34,
+              58,
+              34,
+              47,
+              114,
+              101,
+              115,
+              111,
+              117,
+              114,
+              99,
+              101,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 20,
+          "responseSize": 91
+        },
+        "id": "eaa6ce52-fee6-4b77-8fce-cd59177816a2",
+        "assertions": [
+          {
+            "assertion": "Response status code is 500",
+            "skipped": false
+          },
+          {
+            "assertion": "Content-Type header is application/json",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "c694659f-08b2-494b-a12b-e94d365c87f1",
+          "length": 4,
+          "cycles": 1,
+          "position": 3,
+          "iteration": 0,
+          "httpRequestId": "b918dc32-9eee-49f5-8fb7-1422db123368"
+        },
+        "item": {
+          "id": "3057ce0f-7ee9-426a-b9c7-2d3ddd950f56",
+          "name": "get resource",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "9093",
+              "path": [
+                "resource"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "d32ceb1e-c784-4739-87fe-250c202a7548",
+                "type": "text/javascript",
+                "exec": [
+                  "\r",
+                  "pm.test(\"Response status code is 200\", function () {\r",
+                  "    pm.expect(pm.response.code).to.equal(200);\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Response has the required fields - id, size, and amount\", function () {\r",
+                  "  const responseData = pm.response.json();\r",
+                  "  \r",
+                  "  pm.expect(responseData).to.be.an('array');\r",
+                  "  responseData.forEach(function(item) {\r",
+                  "    pm.expect(item).to.have.property('id');\r",
+                  "    pm.expect(item).to.have.property('size');\r",
+                  "    pm.expect(item).to.have.property('amount');\r",
+                  "  });\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Size is a non-empty string\", function () {\r",
+                  "  const responseData = pm.response.json();\r",
+                  "  \r",
+                  "  pm.expect(responseData).to.be.an('array');\r",
+                  "  responseData.forEach(function(item) {\r",
+                  "    pm.expect(item.size).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Size should not be empty\");\r",
+                  "  });\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Amount is a non-negative integer\", function () {\r",
+                  "    const responseData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(responseData).to.be.an('array');\r",
+                  "    responseData.forEach(function(item) {\r",
+                  "        pm.expect(item.amount).to.be.a('number').and.to.be.at.least(0);\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Content-Type header is application/json\", function () {\r",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "});\r",
+                  "\r",
+                  "var template = `\r",
+                  "<div>\r",
+                  "    <p>Status: {{response.status}}</p>\r",
+                  "    <p>Error: {{response.error}}</p>\r",
+                  "</div>\r",
+                  "`;\r",
+                  "\r",
+                  "function constructVisualizerPayload() {\r",
+                  "    return {response: pm.response.json()};\r",
+                  "}\r",
+                  "\r",
+                  "pm.visualizer.set(template, constructVisualizerPayload());"
+                ],
+                "_lastExecutionId": "c60684e4-9d00-4ccc-821f-8024b0edf461"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "9093",
+            "path": [
+              "resource"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.33.0",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "6bdfafd0-b0fd-4ddd-a765-c5150a328635",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:9093",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "0e19e465-4c23-45d5-aafc-f0395e4a0e87",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 12 Dec 2023 21:21:26 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              49,
+              44,
+              34,
+              115,
+              105,
+              122,
+              101,
+              34,
+              58,
+              34,
+              50,
+              76,
+              34,
+              44,
+              34,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              49,
+              55,
+              48,
+              50,
+              49,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              115,
+              105,
+              122,
+              101,
+              34,
+              58,
+              34,
+              53,
+              76,
+              34,
+              44,
+              34,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              54,
+              52,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 45,
+          "responseSize": 70
+        },
+        "id": "3057ce0f-7ee9-426a-b9c7-2d3ddd950f56",
+        "assertions": [
+          {
+            "assertion": "Response status code is 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Response has the required fields - id, size, and amount",
+            "skipped": false
+          },
+          {
+            "assertion": "Size is a non-empty string",
+            "skipped": false
+          },
+          {
+            "assertion": "Amount is a non-negative integer",
+            "skipped": false
+          },
+          {
+            "assertion": "Content-Type header is application/json",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 247
+    },
+    "failures": [],
+    "error": null
+  }
+}

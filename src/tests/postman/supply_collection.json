@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "d09fad8f-26cd-448e-b891-3d1a823fbd90",
+		"name": "Supply",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13197396"
+	},
+	"item": [
+		{
+			"name": "use resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('timestamp');\r",
+							"    pm.expect(responseData).to.have.property('status');\r",
+							"    pm.expect(responseData).to.have.property('error');\r",
+							"    pm.expect(responseData).to.have.property('path');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Timestamp is a valid timestamp format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.timestamp).to.match(/^\\d+$/);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Error message should not be empty\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.error).to.exist.and.to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"size\" : \"5L\",\r\n    \"amount\" : 64\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9093/supply",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9093",
+					"path": [
+						"supply"
+					]
+				},
+				"description": "This endpoint allows you to make an HTTP POST request to [http://localhost:9093/supply](http://localhost:9093/supply) in order to supply a certain size and amount.\n\n### Request Body\n\n- `size` (string): The size of the supply.\n- `amount` (number): The amount of the supply.\n    \n\n### Response\n\nThe last execution of this request returned a status code of 405, along with the following response body:\n\n``` json\n{\n    \"timestamp\": 0,\n    \"status\": 0,\n    \"error\": \"\",\n    \"path\": \"\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "update resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Response body is empty', function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).to.be.empty;\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\" : 16\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9093/resource/1?amount=500",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9093",
+					"path": [
+						"resource",
+						"1"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Fixed status code and content type tests\r",
+							"pm.test(\"Response status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"// Removed redundant response body test"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"size\" : \"5L\",\r\n    \"amount\" : 64\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9093/resource",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9093",
+					"path": [
+						"resource"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - id, size, and amount\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('array');\r",
+							"  responseData.forEach(function(item) {\r",
+							"    pm.expect(item).to.have.property('id');\r",
+							"    pm.expect(item).to.have.property('size');\r",
+							"    pm.expect(item).to.have.property('amount');\r",
+							"  });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Size is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('array');\r",
+							"  responseData.forEach(function(item) {\r",
+							"    pm.expect(item.size).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Size should not be empty\");\r",
+							"  });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Amount is a non-negative integer\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('array');\r",
+							"    responseData.forEach(function(item) {\r",
+							"        pm.expect(item.amount).to.be.a('number').and.to.be.at.least(0);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"var template = `\r",
+							"<div>\r",
+							"    <p>Status: {{response.status}}</p>\r",
+							"    <p>Error: {{response.error}}</p>\r",
+							"</div>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()};\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9093/resource",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9093",
+					"path": [
+						"resource"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
