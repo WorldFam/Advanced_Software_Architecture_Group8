@@ -1,9 +1,42 @@
+# Architecture diagram
+
+![architecture-overview](https://github.com/WorldFam/Advanced_Software_Architecture_Group8/assets/55923499/90801319-8023-4309-be6b-f653e1b0e5d7)
+
+### Services 
+- Order management system (OMS) (C#/ASP.NET)
+- Production management system (PMS) (Python)
+- Supply management system (SMS) (Java/Spring)
+- Scheduler (Python)
+- Logging (JavaScript/Node.js)
+- Dashboard/Client (JavaScript/React)
+
+### Databases
+- MongoDB (used by order management system to store orders) 
+- MySQL (used by supply management system to store resources)
+
+### Communication mechanisms
+- MQTT (Mosquitto message broker)
+- RestAPI
+- WebSocket
+  
 # Instructions to start application locally
 
-1. Clone repository `git clone https://github.com/WorldFam/Advanced_Software_Architecture_Group8.git`
-2. From the project folder using preffered CLI navigate to the `src` folder using `cd src`
-3. Build and start Docker compose services using `docker-compose up --build`
-4. After container where succesfully build and running, navigate to `localhost:3000` on your browser to access client dashboard
+1. Clone repository
+```
+git clone https://github.com/WorldFam/Advanced_Software_Architecture_Group8.git
+```
+3. From the project root folder using preffered CLI navigate to the `src` folder
+```
+cd src
+```
+4. Build and start Docker compose services
+```
+docker-compose up --build
+```
+6. Access client dashboard through browser
+```
+localhost:3000
+```
 
 # Initialize and start a new runner for deployment to VM
 
@@ -16,10 +49,7 @@ if prompts are not visible execute commad `bash entrypoint.sh` inside the contai
 
 Remember to connect to the VPN if not using school network!!  
 
-# Architecture diagram (Updated)
-
-![architecture-overview](https://github.com/WorldFam/Advanced_Software_Architecture_Group8/assets/55923499/90801319-8023-4309-be6b-f653e1b0e5d7)
-
+-----------------------------------------------------------------------------------------------------------------------------------------------
 # Advanced Software Architecture Portfolio Template
 
 - [Introduction](#introduction)
