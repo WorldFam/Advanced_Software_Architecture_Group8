@@ -1,4 +1,5 @@
-\documentclass[conference]{IEEEtran}
+\documentclass[conference, onecolumn]{IEEEtran}
+
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
@@ -21,7 +22,7 @@
 \usepackage{pifont} % checkmarks
 %\theoremstyle{definition}
 %\newtheorem{definition}{Definition}[section]
-
+\usepackage{float}
 
 \usepackage{listings}
 \lstset
@@ -37,6 +38,7 @@
 \usepackage{subcaption}
 \usepackage{array, multirow}
 \usepackage{enumitem}
+\usepackage{booktabs}
 
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -112,19 +114,46 @@
 
 
 \section{Contribution}
+In this section, reflect on your personal contributions to the project.
+Consider the specific tasks you contributed to in the design, implementation, and experimentation phases.
+Highlight any unique ideas or solutions you provided, how you collaborated with your team, and the impact of your work on the project's overall success.
+Use the table below to show who the main contributor of each section is and who reviewed each section.
 
-  
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \toprule
+                                     Section & Manin Contributor &           Reviewed By \\
+    \midrule
+                                    Abstract &   Student1 &           Student2, Student3 \\
+                 Introduction and Motivation &   Student2 & Student1, Student3, Student4 \\
+    Problem, Research question, and approach &   Student3 & Student2, Student4, Student5 \\
+                           Literature Review &   Student4 & Student1, Student3, Student5 \\
+                                    Use case &   Student5 &           Student2, Student4 \\
+                                         QAS &   Student1 &           Student3, Student5 \\
+                                      Design &   Student2 &           Student1, Student3 \\
+                        Empirical Evaluation &   Student3 &           Student2, Student4 \\
+                      Discussion/Future work &   Student4 &           Student1, Student5 \\
+                                  Conclusion &   Student5 &           Student3, Student4 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Project contributions}
+    \label{tab:project_contributions}
+\end{table}
 
 \section{Discussion}
-
-
+This section should focus on the challenges and successes you encountered throughout the project.
+Discuss any difficulties in design or implementation, how you addressed them, and what you learned from these challenges.
+Also, highlight the successful aspects of the project, emphasizing what worked well and why.
+The discussion should provide a balanced view of the project's process.
 
 \section{Reflection}
-Change 3
-Reflection 123 change ! change2
-test2
+Use this section for reflection on your learning and growth throughout the project.
+Reflect on how this project has influenced your understanding of software architecture and quality attribute testing.
 
 \section{Conclusion}
+Conclude your reflection by summarizing your key takeaways from the project.
+Highlight the most significant lessons learned, both in terms of technical skills and personal development.
 
 
 \bibliographystyle{IEEEtran}

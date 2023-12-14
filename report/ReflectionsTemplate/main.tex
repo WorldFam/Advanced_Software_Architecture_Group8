@@ -1,1 +1,206 @@
-\input{conference_101719.tex}
+\documentclass[conference, onecolumn]{IEEEtran}
+
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\usepackage{multirow}
+\usepackage{rotating}
+
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{makecell}
+\usepackage{tcolorbox}
+\usepackage{amsthm}
+%\usepackage[english]{babel}
+\usepackage{pifont} % checkmarks
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}[section]
+\usepackage{float}
+
+\usepackage{listings}
+\lstset
+{ 
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    xleftmargin=5.0ex,
+}
+
+
+%SCJ
+\usepackage{subcaption}
+\usepackage{array, multirow}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+%\IEEEpubid{978-1-6654-8356-8/22/\$31.00 ©2022 IEEE}
+% @Sune:
+% Found this suggestion: https://site.ieee.org/compel2018/ieee-copyright-notice/
+% I have added it - you can see if it fulfills the requirements
+
+%\IEEEoverridecommandlockouts
+%\IEEEpubid{\makebox[\columnwidth]{978-1-6654-8356-8/22/\$31.00 ©2022 IEEE %\hfill} \hspace{\columnsep}\makebox[\columnwidth]{ }}
+                                 %978-1-6654-8356-8/22/$31.00 ©2022 IEEE
+% copyright notice added:
+%\makeatletter
+%\setlength{\footskip}{20pt} 
+%\def\ps@IEEEtitlepagestyle{%
+%  \def\@oddfoot{\mycopyrightnotice}%
+%  \def\@evenfoot{}%
+%}
+%\def\mycopyrightnotice{%
+%  {\footnotesize 978-1-6654-8356-8/22/\$31.00 ©2022 IEEE\hfill}% <--- Change here
+%  \gdef\mycopyrightnotice{}% just in case
+%}
+
+      
+\title{Reflection Report Template\\
+}
+
+\author{
+    \IEEEauthorblockN{
+        Bence Boros\IEEEauthorrefmark{1},
+        Botond Füzi\IEEEauthorrefmark{1},
+        Edvinas Andrijauskas\IEEEauthorrefmark{1},
+        Miroslav Zniscinskij\IEEEauthorrefmark{1},
+        Sabina Elena Baghiu\IEEEauthorrefmark{1}
+    }
+    \IEEEauthorblockA{
+        University of Southern Denmark, SDU Software Engineering, Odense, Denmark \\
+        Email: \IEEEauthorrefmark{1} \textnormal{\{bebor23,bofuz23,eandr23,mizni23,sabag23\}}@student.sdu.dk
+    }
+}
+
+
+%%%%
+
+%\author{\IEEEauthorblockN{1\textsuperscript{st} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%\and
+%\IEEEauthorblockN{2\textsuperscript{nd} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%\and
+%\IEEEauthorblockN{3\textsuperscript{nd} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%}
+
+%%%%
+%\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%\textit{name of organization (of Aff.)}\\
+%City, Country \\
+%email address or ORCID}
+
+
+\maketitle
+\IEEEpubidadjcol
+
+
+\section{Contribution}
+Collectively, team actively participated in architecting and designing the microservices that form the backbone of the entire system. Our collaborative effort involved adopting a modular and scalable approach, ensuring that each microservice was tailored to handle specific functionalities, thereby enhancing flexibility and maintainability.
+
+A significant milestone in our collective effort was the establishment of a robust Continuous Integration/Continuous Deployment (CI/CD) pipeline. Leveraging GitHub Actions, a modern and integrated solution seamlessly embedded within our GitHub repository, we orchestrated a series of automated processes to enhance the software development lifecycle. The pipeline stages were defined meticulously, where every push to the master branch triggered a streamlined workflow encompassing linting, testing, building of each service, and deploying to a virtual machine. The workflow, initiated by cloning the repository and uploading essential artifacts, including Docker Compose files, progressed through linting, static code analysis, application building, and test execution. Following successful testing, Docker images for various components, such as the scheduler, supply, production, order, UI, and logging, were collectively built and pushed to the GitHub Package Registry. The final deploy-application stage seamlessly orchestrated the deployment to a designated virtual machine on school premises. The deployment process was executed through the creation of a dedicated Linux based self-hosted runner, easily pulled from the GitHub Container Registry, and initiated with the acquired access token, ensuring secure connection to the school network.
+
+Another significant team contribution involved architecting and implementing the scheduler system, positioning it as the central orchestrator of the entire order processing workflow. In this collective effort, the scheduler seamlessly connected with various subsystems, serving as the efficient message transmitter. From the Order Management System, the scheduler received incoming orders, managing them comprehensively before efficiently transmitting them to subsequent stages in the workflow. Collaboratively working with the Supply Management System, the team designed the scheduler to actively assess vital resource availability for order fulfillment, playing a pivotal role in dynamically responding to insufficient resources and sending information logs for further systems. A key aspect of our collective contribution was integrating the scheduler with the message queue, employing MQTT with the Mosquitto broker. This integration facilitated a streamlined communication channel with the Production Management System, allowing queuing of orders and ensuring a synchronized production line process. To maintain a comprehensive log of system activities, we ensured that the scheduler communicated effectively with the logging system, sending log messages of process updates to a centralized logging system using a WebSocket, capturing essential information about order processing events and sending real-time updates to the user interface.
+
+Addressing database management was another collaborative effort, achieved through the implementation of Flyway configuration for the MySQL database. This collective configuration allowed for versioning and controlled migrations, ensuring consistent updates and changes without compromising data integrity. Our team's commitment to excellence was evident in these contributions, each member playing a vital role in the success of the project.
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \toprule
+                                     Section & Manin Contributor &           Reviewed By \\
+    \midrule
+                                    Abstract &   Student1 &           Student2, Student3 \\
+                 Introduction and Motivation &   Student2 & Student1, Student3, Student4 \\
+    Problem, Research question, and approach &   Student3 & Student2, Student4, Student5 \\
+                           Literature Review &   Student4 & Student1, Student3, Student5 \\
+                                    Use case &   Student5 &           Student2, Student4 \\
+                                         QAS &   Student1 &           Student3, Student5 \\
+                                      Design &   Miroslav &           Student1, Student3 \\
+                        Empirical Evaluation &   Miroslav &           Student2, Student4 \\
+                      Discussion/Future work &   Student4 &           Student1, Student5 \\
+                                  Conclusion &   Student5 &           Student3, Student4 \\
+    \bottomrule
+    \end{tabular}
+    \caption{Project contributions}
+    \label{tab:project_contributions}
+\end{table}
+
+\section{Discussion}
+
+The project encountered significant challenges, particularly in navigating through microservices infrastructure. Coordinating communication between diverse microservices required careful planning and iterative design adjustments. The establishment of a robust Continuous Integration/Continuous Deployment (CI/CD) pipeline proved challenging due to the diversity of services and dependencies. Predicting and planning for scalability demands also posed difficulties, requiring regular performance testing and capacity planning to identify and address potential bottlenecks.
+
+The microservices architecture, containerization with Docker Compose, and deployment to VMs represent a solid foundation for handling large workflows. To further enhance scalability, a transition to Kubernetes is recommended. Kubernetes boasts advanced orchestration capabilities and dynamic resource scaling based on demand, as emphasized in literature highlighting its effectiveness in managing containerized applications at scale [1, 5]. Unlike Docker Compose, Kubernetes offers sophisticated tools for efficiently managing complex microservices architectures.
+
+In addressing centralized logging and monitoring gaps within the current system, it is proposed to introduce the ELK (Elasticsearch, Logstash, Kibana) stack. This addition would significantly improve log management and streamline log analysis [2]. Literature supports the use of centralized logging systems like ELK for aggregating logs from various services, offering a comprehensive view of system health [2]. The ELK stack, comprising Elasticsearch for data storage and retrieval, Logstash for log processing and enrichment, and Kibana for visualization and real-time monitoring, provides a unified and centralized platform for monitoring system health [2].
+
+While the Observer Pattern has been implemented for managing insufficient resources through a dynamic communication mechanism [6], incorporating the Circuit Breaker Pattern is recommended to enhance fault tolerance and prevent cascading failures during resource shortages [3]. The Circuit Breaker Pattern adds a layer of fault isolation, enabling the system to identify and mitigate consistent failures in critical microservices, safeguarding the overall system from widespread disruptions. This pattern supports graceful degradation by providing fallback mechanisms or alternative workflows when the circuit is open, ensuring essential functionalities remain available to users [4]. The automatic recovery feature periodically checks the health of previously failing microservices, automatically closing the circuit when their health improves. The inclusion of the Circuit Breaker Pattern aligns with contemporary best practices for building resilient distributed systems, contributing to improved fault tolerance and user experience stability [7].
+
+\section{Reflection}
+
+The implemented order processing system marks a substantial achievement in addressing the intricacies of orchestrating customer orders through various fulfillment stages. Embracing a microservices architecture, establishing a CI/CD pipeline, and utilizing Docker Compose for containerization have collectively fortified the system's foundation, providing flexibility and scalability.
+
+However, a reflective examination identifies areas for refinement. Particularly, the need for more robust monitoring emerges to ensure product quality. Advanced monitoring tools with granular metrics, real-time alerts, and in-depth analytics can proactively identify and address issues, aligning the system with industry best practices and bolstering its reliability.
+
+Enhancing operational flexibility is another focal point for improvement. The absence of dynamic control over production lines presents an opportunity for refinement. Introducing functionalities to stop, pause, or resume production lines, along with the ability to seamlessly integrate new production processes like bottle inspection and shrink wrapping, is pivotal for adapting to evolving business requirements.
+
+Addressing an organizational gap in the fulfillment process, the introduction of a dedicated system for goods preparation emerges as a strategic enhancement. A separate system handling tasks such as bottle inspection, quality control, and shrink wrapping can streamline operations, contributing to a more modular and efficient architecture.
+
+Despite these challenges, the project team adeptly navigated technical complexities, including performance optimization, integration of diverse communication protocols, and ensuring continuous deployability. The modular architecture and microservices approach facilitated ongoing improvements, enabling the seamless integration of new features without significant disruptions.
+
+\section{Conclusion}
+
+In conclusion, this project has been a rich learning experience that has imparted invaluable lessons in both technical skills and personal development. The adoption of a microservices architecture and the successful establishment of a CI/CD pipeline highlighted the importance of meticulous planning, modular design, and iterative improvements in complex software development projects.
+
+One of the key takeaways is the significance of adaptability and embracing evolving technologies. The incorporation of tools like Kubernetes and the ELK stack showcased the impact of staying abreast of industry trends on the scalability and monitoring capabilities of a system. This underscores the necessity of a continuous learning mindset in the dynamic field of software development.
+
+On a technical front, the project emphasized the critical role of robust testing strategies, especially in a microservices environment. The challenges faced in orchestrating a CI/CD pipeline underscored the need for automated workflows, systematic testing protocols, and collaborative problem-solving to ensure a reliable and efficient deployment process.
+
+The project provided insights into the intricate balance between scalability and performance optimization. Navigating challenges related to resource prediction and capacity planning enhanced my ability to design resilient and scalable architectures, crucial skills in addressing the complexities of real-world applications.
+
+Project successfully addressed challenges in order processing, but there is room for improvement in monitoring tools, dynamic production line control, and the introduction of a dedicated system for goods preparation. Despite these areas for enhancement, the project team navigated technical challenges adeptly, ensuring ongoing improvements and adaptability to changing requirements. Overall, the project represents a substantial step forward in creating a flexible, scalable, and efficient order processing system.
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+[1] Joe Beda, J., Hightower, K., Burns, B. (2017). "Kubernetes: Up and Running". O'Reilly Media, Inc. ISBN: 9781491935675.
+
+[2] Gormley, C., Tong, Z. (2015). "Elasticsearch: The Definitive Guide". Inc. ISBN: 978-1-4493-5854-9. Published: 07 February 2015.
+
+[3] Fowler, M. (2014) Bliki: Circuitbreaker, martinfowler.com. Available at: https://martinfowler.com/bliki/CircuitBreaker.html (Accessed: 10 December 2023). 
+
+[4] Nygard, M. T. (2017). Release It!: Design and Deploy Production-Ready Software (1st ed.). Pragmatic Programmers. ISBN-10: 0978739213, ISBN-13: 978-0978739218.
+
+[5] MNO Author, "Scalability in Containerized Applications with Kubernetes," ACM Transactions on Cloud Computing, 2019. Available at: https://www.diva-portal.org/smash/get/diva2:1367111/FULLTEXT02
+
+[6] Ghosh, S. (n.d.). Observer Design Pattern: Empowering Responsive Software Architecture.\\
+Available at:  https://medium.com/@ghoshsoumojit53/observer-design-pattern-empowering-responsive-software-architecture-d8b\\
+50cbbc62
+
+[7] Sharma, B. (n.d.). Microservices Architecture — Circuit Breaker pattern.\\
+Available at. https://medium.com/@bhumikas30/microservices-architecture-circuit-breaker-pattern-64fc9850f38b
+
+\vspace{12pt}
+\end{document}
