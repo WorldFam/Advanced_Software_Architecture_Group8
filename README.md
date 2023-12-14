@@ -1,3 +1,10 @@
+# Instructions to start application locally
+
+1. Clone repository `git clone https://github.com/WorldFam/Advanced_Software_Architecture_Group8.git`
+2. From the project folder using preffered CLI navigate to the `src` folder using `cd src`
+3. Build and start Docker compose services using `docker-compose up --build`
+4. After container where succesfully build and running, navigate to `localhost:3000` on your browser to access client dashboard
+
 # Initialize and start a new runner for deployment to VM
 
 - Pull runner image from github container registry `docker pull ghcr.io/worldfam/github-runner:v1.3`
@@ -8,9 +15,10 @@
 if prompts are not visible execute commad `bash entrypoint.sh` inside the container
 
 Remember to connect to the VPN if not using school network!!  
+
 # Architecture diagram (Updated)
 
-![image](https://github.com/WorldFam/Advanced_Software_Architecture_Group8/assets/55923499/307bb97e-0b47-408d-a22a-273ba35a689b)
+![architecture-overview](https://github.com/WorldFam/Advanced_Software_Architecture_Group8/assets/55923499/90801319-8023-4309-be6b-f653e1b0e5d7)
 
 # Advanced Software Architecture Portfolio Template
 
