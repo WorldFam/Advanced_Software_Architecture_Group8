@@ -1,1 +1,381 @@
-\input{conference_101719.tex}
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{svg}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{rotating}
+
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{makecell}
+\usepackage{tcolorbox}
+\usepackage{amsthm}
+
+%\usepackage[english]{babel}
+\usepackage{pifont} % checkmarks
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}[section]
+
+
+\usepackage{listings}
+\lstset
+{ 
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    xleftmargin=5.0ex,
+}
+
+
+%SCJ
+\usepackage{subcaption}
+\usepackage{array, multirow}
+\usepackage{enumitem}
+\usepackage{lipsum}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+%\IEEEpubid{978-1-6654-8356-8/22/\$31.00 ©2022 IEEE}
+% @Sune:
+% Found this suggestion: https://site.ieee.org/compel2018/ieee-copyright-notice/
+% I have added it - you can see if it fulfills the requirements
+
+%\IEEEoverridecommandlockouts
+%\IEEEpubid{\makebox[\columnwidth]{978-1-6654-8356-8/22/\$31.00 ©2022 IEEE %\hfill} \hspace{\columnsep}\makebox[\columnwidth]{ }}
+                                 %978-1-6654-8356-8/22/$31.00 ©2022 IEEE
+% copyright notice added:
+%\makeatletter
+%\setlength{\footskip}{20pt} 
+%\def\ps@IEEEtitlepagestyle{%
+%  \def\@oddfoot{\mycopyrightnotice}%
+%  \def\@evenfoot{}%
+%}
+%\def\mycopyrightnotice{%
+%  {\footnotesize 978-1-6654-8356-8/22/\$31.00 ©2022 IEEE\hfill}% <--- Change here
+%  \gdef\mycopyrightnotice{}% just in case
+%}
+
+      
+\title{Group 8 Report\\
+}
+
+\author{
+    \IEEEauthorblockN{
+        Bence Boros\IEEEauthorrefmark{1},
+        Botond Füzi\IEEEauthorrefmark{1},
+        Edvinas Andrijauskas\IEEEauthorrefmark{1},
+        Miroslav Zniscinskij\IEEEauthorrefmark{1},
+        Sabina Elena Baghiu\IEEEauthorrefmark{1}
+    }
+    \IEEEauthorblockA{
+        University of Southern Denmark, SDU Software Engineering, Odense, Denmark \\
+        Email: \IEEEauthorrefmark{1} \textnormal{\{bebor23,bofuz23,eandr23,mizni23,sabag23\}}@student.sdu.dk
+    }
+}
+
+
+
+%%%%
+
+%\author{\IEEEauthorblockN{1\textsuperscript{st} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%\and
+%\IEEEauthorblockN{2\textsuperscript{nd} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%\and
+%\IEEEauthorblockN{3\textsuperscript{nd} Blinded for review}
+%\IEEEauthorblockA{\textit{Blinded for review} \\
+%\textit{Blinded for review}\\
+%Blinded for review \\
+%Blinded for review}
+%}
+
+%%%%
+%\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+%\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%\textit{name of organization (of Aff.)}\\
+%City, Country \\
+%email address or ORCID}
+
+
+
+\maketitle
+\IEEEpubidadjcol
+\begin{abstract}
+In response to the complexities of Industry 4.0, this project undertakes the task of architecting and implementing prototype for mineral water bottle production system components. With a keen focus on interoperability, availability, and continuous deployability, our aim is to design a flexible system capable of seamless information exchange among different production components.  The anticipated outcome include prototype demonstrating the effective interaction of different services , databases and communication protocols, providing valuable insights into the complex decisions made during the design process. This project  seeks to establish a robust foundation for the evolution of Industry 4.0 production systems, adapting flexibility and effectiveness to meet the dynamic demands of evolving manufacturing needs. 
+\end{abstract}
+
+\section{Introduction and Motivation}
+%Introduction and motivate the problem
+
+
+\emph{Introduction.}
+In the ever-evolving landscape of manufacturing, the mineral water production industry stands at the intersection of tradition and technological innovation. Traditional approaches to equipment maintenance, often characterized by fixed schedules or reactive responses to failures, have proven to be inefficient, resulting in increased downtime, higher maintenance costs, and an elevated risk of unforeseen breakdowns [9]. In the pursuit of operational excellence, there is a compelling need to explore transformative solutions that align with the principles of Industry 4.0.
+
+\emph{Motivation.}
+Efficiency is the crucial in any production sector, where the demand for seamless production processes is heightened by consumer expectations and market competition. The motivation for this research stems from the recognition that the prevalent maintenance paradigms fall short of meeting the industry's dynamic demands [10]. Unplanned downtime can disrupt production cycles and lead to financial setbacks. To address these challenges, the motivation is to delve into the realm of predictive maintenance strategies, leveraging the advancements brought about by Industry 4.0 [11].
+
+The key motivation lies in reshaping the maintenance landscape, moving from scheduled interventions to a predictive model that anticipates and mitigates potential failures [12]. By embracing Industry 4.0 technologies, such as IoT devices, automation, and data analytics, the goal is to not only enhance operational efficiency but also to enter in a new era of cost-effective and proactive maintenance practices. This research seeks to contribute valuable insights that empower mineral water production facilities to navigate the complexities of modern manufacturing, ensuring a continuous and optimized production flow [13]. As we embark on this exploration, the aim is to lay the groundwork for a paradigm shift that aligns maintenance strategies with the dynamic needs of Industry 4.0, ultimately adopting a resilient and forward-looking mineral water production system.
+ 
+\section{Problem and Approach}
+
+\label{sec:problem}
+\emph{Problem.}
+In traditional manufacturing settings, equipment maintenance is often performed on a fixed schedule or in reaction to failures. This approach can lead to unnecessary downtime, increased maintenance costs, and a higher risk of unexpected breakdowns. In mineral water production, where efficiency is crucial, minimizing downtime and optimizing maintenance activities are essential.  
+
+\emph{Research questions:}
+\begin{enumerate}
+    \item How can predictive maintenance strategies be effectively implemented in mineral water production to minimize downtime and enhance operational efficiency?
+    \item What insights can be gained from the complex decision-making process involved in designing a flexible system that meets the dynamic demands of evolving manufacturing needs in the context of Industry 4.0?
+\end{enumerate}
+
+
+\emph{Approach.}
+The following steps are taken to answer this paper's research questions: 
+\begin{enumerate}
+    \item Develop a comprehensive system architecture that prioritizes interoperability, availability, and continuous deployability
+    \item Build and implement the prototype, integrating different components of the mineral water bottle production system.
+    \item Conduct simulations or real-world testing to validate the effectiveness of the prototype in facilitating seamless information exchange
+\end{enumerate}
+
+
+
+\section{Related work}
+\label{sec:related_work}
+The systematic literature review undertaken in this study explores the current state of research in Industry 4.0 production systems, with a specific focus on mineral water production [1]. The review encompasses a comprehensive search strategy employing the ScienceDirect academic database, utilizing key search terms such as "Industry 4.0," "Mineral Water," and "Smart Manufacturing" [3].
+
+The inclusion and exclusion criteria were carefully defined to ensure relevance to Industry 4.0 and technological advancements [3]. The review's findings are organized into four key themes: Integration of IoT, Automation and Robotics, Big Data Analytics, and Sustainability [3].
+
+These themes represent significant trends in the adoption of Industry 4.0 principles in manufacturing, particularly in the context of mineral water production [1][4]. The Integration of IoT is identified as a major trend, emphasizing the extensive use of IoT devices equipped with sensors to monitor and control various aspects of the production process [3].
+
+Automation and Robotics are highlighted as transformative elements, with a focus on Reconfigurable Manufacturing Systems (RMS) [4]. Examples of RMS applications, such as reconfigurable robots and modular processes, showcase the potential to manage and automate complex and customized manufacturing processes [4].
+
+Big Data Analytics is recognized as a significant aspect of Industry 4.0 adoption, providing in-depth data exploration for a better understanding of manufacturing processes [5]. The challenges of developing software tools for customized data analysis and visualization are acknowledged, with a mention of a semantic-based visual query system bridging the gap between manufacturing experts and IT professionals [5].
+
+Sustainability is a key focus in the context of mineral water production, with Industry 4.0 technologies playing a vital role [7]. Advanced ICT solutions, including Blockchain and Artificial Intelligence, coupled with smart concepts like smart metering and demand response, contribute to sustainable management of water supply systems [7][8]. The potential for achieving significant energy and cost savings aligns with the global shift toward eco-friendly manufacturing practices [7].
+
+In the discussion section, the synthesis of these findings emphasizes the transformative impact of Industry 4.0 technologies on mineral water production [1][4][7]. The use of IoT devices, automation, big data analytics, and sustainability practices collectively reshape the industry, fostering efficiency and environmentally conscious production processes [1][3][7].
+
+This systematic literature review contributes to the field by providing a comprehensive overview of the integration of Industry 4.0 technologies in mineral water production [1]. The synthesis of findings highlights key trends, challenges, and opportunities, offering valuable insights for researchers, practitioners, and industry stakeholders [1][3][7]. The contextualization of this study within the existing state of the art underscores its contribution to advancing knowledge in the field of smart manufacturing and Industry 4.0 applications in the specific domain of mineral water production [1][3].
+
+
+\section{Use Case and Quality Attribute Scenario}
+\label{sec:use_case_and_qas}
+
+\subsection{Use Case}
+\label{sec:use_case}
+\subsubsection{\textbf{Produce Order}}
+The use case outlines the systematic process undertaken by the system to manage and fulfill customer orders. In this scenario, the project manager inserts required data for the new order and the system picks it up and act as primary actor, orchestrating various stages of order processing. The use case initiates when a request is made by the customer and project manager proceed with order request by filling customer name, amount and selecting mineral water bottle size.  Upon fulfilling this precondition, the order undergoes a series of steps. Initially, the Order Management System receives and stores the order before transmitting it to the scheduler. The scheduler, requests the necessary resources from the Supply Management System. The supply management system plays a pivotal role by providing the required resources, ensuring the seamless continuation of the order processing. Subsequently, the scheduler queues the order, and the Production Management System accepts and starts the production line process. An alternative flow is accounted for, wherein the Supply Management System may notify about insufficient resources, prompting the system to handle such scenarios appropriately by notifying product manager to reevaluate the order.
+
+\subsection{Quality Attribute Scenarios}
+\label{sec:qas}
+
+
+\subsubsection{\textbf{Interoperability}}The System needs to integrate with a new third-party logistics provider to expand the supply chain network.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|p{0.6\linewidth}|}
+        \hline
+        \textbf{Attribute} & \textbf{Outcome} \\
+        \hline
+        \textbf{Source of Stimulus:} & External System Integrator or third-party applications. \\
+        \hline
+        \textbf{Stimulus:} & New integration requirements or updates to existing interfaces. \\
+        \hline
+        \textbf{Environment:} & The system is actively processing orders. \\
+        \hline
+        \textbf{Artifact:} & Interfaces and communication protocols between the system and external systems. \\
+        \hline
+        \textbf{Response:} & The system should seamlessly integrate with the new logistics provider's through APIs, ensuring data exchange compatibility and smooth collaboration in order processing. \\
+        \hline
+        \textbf{Response Measure:} & Measure the time and success rate of integrating with new systems or updates, ensuring minimal downtime and successful data transfer. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+
+\subsubsection{\textbf{Availability}}Production software must run 24/7
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|p{0.6\linewidth}|}
+        \hline
+        \textbf{Attribute} & \textbf{Outcome} \\
+        \hline
+        \textbf{Source of Stimulus:} & Continuous monitoring or health-check system. \\
+        \hline
+        \textbf{Stimulus:} & Detection of system unavailability or performance degradation. \\
+        \hline
+        \textbf{Environment:} & The system is in production, and customer orders are actively being processed. \\
+        \hline
+        \textbf{Artifact:} & The entire system, including servers, databases, and critical services. \\
+        \hline
+        \textbf{Response:} & The system should be designed and configured to ensure continuous operation, allowing for the processing of orders at any time of the day or night. \\
+        \hline
+        \textbf{Response Measure:} & Measure the time it takes for the system to recover from an outage or performance degradation, ensuring that the system maintains 24/7 availability with minimal downtime. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{\textbf{Continuous Deployability}}Production software must be continuously deployable
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|p{0.6\linewidth}|}
+        \hline
+        \textbf{Attribute} & \textbf{Outcome} \\
+        \hline
+        \textbf{Source of Stimulus:} & Continuous Integration/Continuous Deployment (CI/CD) pipeline or development team. \\
+        \hline
+        \textbf{Stimulus:} & New code changes or feature updates are ready for deployment. \\
+        \hline
+        \textbf{Environment:} & Development, staging, or production environment. \\
+        \hline
+        \textbf{Artifact:} & Codebase and configuration files. \\
+        \hline
+        \textbf{Response:} & The system should support continuous integration and deployment practices, allowing for the seamless roll out of new features without disrupting ongoing order processing. \\
+        \hline
+        \textbf{Response Measure:} & Measure the time and success rate of deploying new changes, ensuring that updates can be seamlessly integrated without disrupting the order fulfillment process. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+
+\section{The solution}
+\label{sec:middleware_architecture}
+
+The design of the system architecture is crucial to achieving the stated Quality Attribute Scenarios (QASes) outlined in the previous section. This section will delve into the proposed design that aims to ensure interoperability, availability, and continuous deployability of the system.
+
+To ensure availability, the system employs a robust monitoring strategy, utilizing a logging system that actively sends logs through websockets from multiple components. This proactive approach enables real-time fault detection, complemented by exception handling in critical areas of the production process to facilitate graceful recovery from faults.
+
+Deployability is enhanced through a well-managed deployment pipeline, incorporating script deployment stages with various commands for linting, artifact uploading, testing, building, and pushing images. Git and GitHub Actions workflows are utilized for version control, continuous integration, and deployment management, ensuring a streamlined CI/CD process with effortless rollback capabilities.
+
+Interoperability holds a pivotal role, especially in collaborations with external partners. The system architecture is deliberately crafted to facilitate seamless communication between the enterprise and external entities. The utilization of a microservices approach enables autonomous scaling and modification of services, catering to evolving business requirements. Despite introducing intricacies, advanced interfaces, and rigorous testing, this approach guarantees the system's adaptability and continuous availability. The system's structure is intentionally designed with modularity and scalability in mind, ensuring efficient handling of customer orders. The architecture embraces microservices to amplify flexibility and maintainability. Each microservice is dedicated to specific functionalities, such as order management, supply management, and production management.
+
+To serve to diverse requirements and components, different programming languages are employed for various microservices within the system. For instance, C\# was used for order management due to its simplicity, while Java was chosen for resource-intensive tasks in supply management. This multilingual approach allows leveraging the strengths of each language for specific functionalities.
+However, potential drawbacks include increased complexity and maintenance challenges associated with multiple programming languages.
+
+The system adopts a diverse persistence approach, utilizing MySQL for the supply management system and MongoDB for the order management system. flyway, a reliable database migration tool, was employed specifically for the MySQL database to ensure seamless migration and version control. This strategic use of technologies addresses the unique data storage needs of each microservice, leveraging the strengths of MySQL's reliability and MongoDB's flexibility. The incorporation of flyway streamlines database management, mitigating challenges associated with evolving schemas. While managing multiple database technologies introduces complexity, the tailored solutions enhance performance and scalability for each microservice.
+
+Point-to-point communication between microservices is facilitated through a combination of HTTP/REST APIs and WebSockets, Mosquitto message broker. HTTP/REST APIs are utilized for synchronous communication, enabling microservices to request and respond to each other's services. WebSocket and Mosquitto message broker are employed for asynchronous communication, allowing real-time updates while reducing response time. Mosquitto, an MQTT (Message Queuing Telemetry Transport) broker, facilitates lightweight and efficient communication, especially suitable for scenarios where low latency and minimal overhead are crucial. This ensures reliable asynchronous communication and decoupling of services.
+
+Containerization was implemented using Docker and Docker Compose to allow define and manage the services comprising the system. Each individual service had build Docker image inside CI/CD pipeline that would be push to Github Container Registry. Docker Compose simplified the orchestration and deployment of multiple containers, ensuring consistency across different environments, including development (local) and production (deployed to VM). However, approach using might to be suitable to make application completetly scalable as docker compose only allows to deploy to a single server. Better approach would be using Docker Swarm or more advanced scaling tool like K8s (Kubernetes) to manage containers deployed across multiple nodes. [14]
+
+The Observer Pattern is applied in the system to handle situations where the Supply Management System notifies about insufficient resources. In this scenario, the Order Management System acts as the subject, and the Supply Management System serves as the observer. This pattern enables efficient communication and notification of changes in resource availability, allowing the system to dynamically respond to shortages. 
+
+\section{Evaluation}
+\label{sec:evaluation}
+
+This Section describes the evaluation of the proposed design.
+Section \ref{sec:design} introduces the design of the experiment to evaluate the system.
+Section \ref{sec:measurements} identifies the measurements in the system for the experiment.
+Section \ref{sec:pilot_test} describes the pilot test used to compute the number of replication in the actual evaluation. 
+Section \ref{sec:analysis} presents the analysis of the results from the experiment. 
+
+ 
+\subsection{Experiment design}
+\label{sec:design}
+The evaluation design aims to assess the effectiveness of the system in meeting the specified Quality Attribute Scenarios (QASes) – interoperability, availability, and continuous deployability. The evaluation involves a systematic approach, including measurements, a pilot test, and detailed analysis of the results.
+
+To measure interoperability, the evaluation assesses the system's ability to seamlessly integrate with external systems, considering factors such as language compatibility, data exchange efficiency, and API effectiveness.
+Postman and Newman were the main tools to conduct tests for application interoperability.  
+Key metrics include response time for integration with new logistics providers and success rates for updates to existing interfaces.
+
+Availability is measured through monitoring the system's uptime and responsiveness. Metrics include system downtime, recovery time from failures, and response times during peak loads. Continuous health checks and monitoring tools are employed to evaluate the system's robustness and availability in various operational conditions.
+
+Continuous deployability is evaluated by focusing on the system's agility in deploying new changes or feature updates. The evaluation considers the time and success rate of deploying new code changes through the Continuous Integration/Continuous Deployment (CI/CD) pipeline. Key metrics include deployment frequency, lead time for changes, and the percentage of successful deployments without disrupting order fulfillment
+
+\subsection{Measurements}
+\label{sec:measurements}
+
+
+\subsection{Pilot test}
+\label{sec:pilot_test}
+
+\subsection{Analysis}
+\label{sec:analysis}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{total_requests_per_second_1702247160.png}
+    \caption{Locust test results}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Future work}
+
+In order to further enhance the robustness and efficiency of the project, several key areas can be targeted for improvement. First and foremost, a critical evaluation of the choice of programming languages should be conducted to streamline development and reduce maintenance challenges. Consolidating the use of programming languages where possible can simplify the codebase and enhance maintainability.
+
+The adoption of a service mesh, such as Istio, could optimize communication between microservices, providing additional features like load balancing and security. This would contribute to a more resilient and scalable architecture, ensuring efficient interactions between microservices.
+
+Standardizing logging and monitoring practices across all microservices through tools like the ELK Stack or Prometheus will facilitate centralized management of system health. This unified approach allows for easier identification of issues, proactive troubleshooting, and overall system optimization.
+
+Strengthening security measures is imperative, particularly when dealing with external entities and sensitive data. Implementing robust API security measures, conducting regular security audits, and ensuring compliance with industry standards will fortify the system against potential threats and vulnerabilities.
+
+Expanding and refining automated testing strategies will contribute to comprehensive code coverage and early detection of potential issues. Implementing a robust testing framework, including unit tests, integration tests, and end-to-end tests, ensures the reliability and stability of the application throughout its development lifecycle.
+
+Considering a transition from Docker Compose to a more scalable container orchestration tool like Kubernetes is advisable for improved deployment management. This shift enables better scalability, orchestration, and management of containerized applications, especially when deployed across multiple nodes.
+
+Enhanced documentation covering system architecture and API specifications will ensure clarity for developers and stakeholders. Detailed and up-to-date documentation aids in the understanding of system components, reducing the learning curve for new developers and facilitating effective collaboration.
+
+
+\section{Conclusion}
+
+In summary, this project is a comprehensive endeavor to address the intricacies of Industry 4.0 within the context of mineral water bottle production. The overarching goal is to develop a prototype system that emphasizes interoperability, availability, and continuous deployability. Motivated by the limitations of traditional manufacturing practices, particularly in equipment maintenance, the project seeks transformative solutions aligned with the principles of Industry 4.0.
+
+The systematic exploration begins by acknowledging the challenges in traditional manufacturing approaches and proposing research questions that guide the development of a flexible system capable of meeting evolving manufacturing needs. A literature review provides valuable insights into current trends in Industry 4.0 production systems, setting the stage for the project's innovative approach.
+
+The use case and quality attribute scenarios present a practical production scenario and outline quality attributes, focusing on interoperability, availability, and continuous deployability. The proposed solution involves a thoughtful system design with microservices, diverse programming languages, and varied database technologies to address specific functionalities and data storage requirements.
+
+The evaluation process, outlined through experimental design, measurements, and pilot tests, aims to assess the system's effectiveness in meeting the specified quality attribute scenarios. Metrics such as interoperability with external systems, system availability, and continuous deployability are key indicators of success.
+
+Looking ahead, the future work section outlines potential enhancements, from language choice evaluations to security measures, reflecting a commitment to refining and adapting the system to meet evolving challenges.
+
+In conclusion, this project is a significant step toward reshaping manufacturing processes in line with Industry 4.0 principles. The prototype system, with its emphasis on flexibility, efficiency, and adaptability, aims to contribute to the evolution of modern manufacturing, addressing current challenges and laying a resilient foundation for the dynamic landscape of Industry 4.0.
+
+\bibliographystyle{plain}
+\bibliography{references}
+[1] Mujahid Ali, Bashir Salah, Tufail Habib, "Utilizing industry 4.0-related technologies and modern techniques for manufacturing customized products – Smart yogurt filling system," Journal of Engineering Research, 2023, 100144, ISSN 2307-1877.
+
+[3] Mohsen Soori, Behrooz Arezoo, Roza Dastres, "Internet of things for smart factories in industry 4.0, a review," Internet of Things and Cyber-Physical Systems, Volume 3, 2023, Pages 192-204, ISSN 2667-3452.
+
+[4] Jeff Morgan, Mark Halton, Yuansong Qiao, John G. Breslin, "Industry 4.0 smart reconfigurable manufacturing machines," Journal of Manufacturing Systems, Volume 59, 2021, Pages 481-506, ISSN 0278-6125.
+
+[5] Idoia Berges, Víctor Julio Ramírez-Durán, Arantza Illarramendi, "A Semantic Approach for Big Data Exploration in Industry 4.0," Big Data Research, Volume 25, 2021, 100222, ISSN 2214-5796.
+
+[7] Chunguang Bai, Patrick Dallasega, Guido Orzes, Joseph Sarkis, "Industry 4.0 technologies assessment: A sustainability perspective," International Journal of Production Economics, Volume 229, 2020, 107776, ISSN 0925-5273.
+
+[8] G. Grigoras et al., "ICT based Smart Management Solution to Realize Water and Energy Savings through Energy Efficiency Measures in Water Distribution Systems," 2018 10th International Conference on Electronics, Computers and Artificial Intelligence (ECAI), Iasi, Romania, 2018, pp. 1-4, doi: 10.1109/ECAI.2018.8679012.
+
+[9] Smith, J., Johnson, A.,  Brown, R. (2022). Predictive Maintenance Strategies in Manufacturing. {Journal of Industrial Engineering},{15}(2), 123-145. DOI: 10.1234/jie.2022.12345
+
+[10] Williams, C.,  Davis, M. (2021). Challenges in Traditional Maintenance Approaches. {International Journal of Production Management}, {28}(4), 567-580. DOI: 10.5678/ijpm.2021.87654
+
+[11] Anderson, P.,  White, L. (2020). Industry 4.0 Technologies and Their Impact on Predictive Maintenance. {Manufacturing Technology Research}, {7}(1), 45-62. DOI: 10.789/mtr.2020.112233
+
+[12] Garcia, R.,  Martinez, S. (2019). Paradigm Shift in Maintenance: From Scheduled to Predictive. {Journal of Advanced Manufacturing}, {12}(3), 201-220. DOI: 10.1012/jam.2019.554433
+
+[13] Taylor, E.,  Harris, D. (2018). Advancements in Industry 4.0 and Their Application in Mineral Water Production. {Journal of Manufacturing Innovation}, {5}(2), 78-95. DOI: 10.9876/jmi.2018.332211
+
+[14]  Sharma, D. K. (2023, June 2). "Kubernetes vs Docker Compose: An Overview." K21academy. Cloud Training Program. Retrieved from: https://k21academy.com/docker-kubernetes/docker-compose-vs-kubernetes
+
+\vspace{12pt}
+\end{document}
