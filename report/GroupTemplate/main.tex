@@ -18,6 +18,7 @@
 \usepackage{makecell}
 \usepackage{tcolorbox}
 \usepackage{amsthm}
+\usepackage{float}
 
 %\usepackage[english]{babel}
 \usepackage{pifont} % checkmarks
@@ -67,7 +68,7 @@
 %}
 
       
-\title{Group 8 Report\\
+\title{Developing Industry 4.0 systems with a focus on Quality Attributes and Microservice Architecture\\
 }
 
 \author{
@@ -119,7 +120,12 @@
 \maketitle
 \IEEEpubidadjcol
 \begin{abstract}
+
 In response to the complexities of Industry 4.0, this project undertakes the task of architecting and implementing prototype for mineral water bottle production system components. With a keen focus on interoperability, availability, and continuous deployability, our aim is to design a flexible system capable of seamless information exchange among different production components.  The anticipated outcome include prototype demonstrating the effective interaction of different services , databases and communication protocols, providing valuable insights into the complex decisions made during the design process. This project  seeks to establish a robust foundation for the evolution of Industry 4.0 production systems, adapting flexibility and effectiveness to meet the dynamic demands of evolving manufacturing needs. 
+
+\begin{IEEEkeywords}
+    Microservice architecture, Quality Attributes, Industry 4.0,
+\end{IEEEkeywords}
 \end{abstract}
 
 \section{Introduction and Motivation}
@@ -127,12 +133,12 @@ In response to the complexities of Industry 4.0, this project undertakes the tas
 
 
 \emph{Introduction.}
-In the ever-evolving landscape of manufacturing, the mineral water production industry stands at the intersection of tradition and technological innovation. Traditional approaches to equipment maintenance, often characterized by fixed schedules or reactive responses to failures, have proven to be inefficient, resulting in increased downtime, higher maintenance costs, and an elevated risk of unforeseen breakdowns [9]. In the pursuit of operational excellence, there is a compelling need to explore transformative solutions that align with the principles of Industry 4.0.
+In the ever-evolving landscape of manufacturing, the mineral water production industry stands at the intersection of tradition and technological innovation. Traditional approaches to equipment maintenance, often characterized by fixed schedules or reactive responses to failures, have proven to be inefficient, resulting in increased downtime, higher maintenance costs, and an elevated risk of unforeseen breakdowns. In the pursuit of operational excellence, there is a compelling need to explore transformative solutions that align with the principles of Industry 4.0.
 
 \emph{Motivation.}
-Efficiency is the crucial in any production sector, where the demand for seamless production processes is heightened by consumer expectations and market competition. The motivation for this research stems from the recognition that the prevalent maintenance paradigms fall short of meeting the industry's dynamic demands [10]. Unplanned downtime can disrupt production cycles and lead to financial setbacks. To address these challenges, the motivation is to delve into the realm of predictive maintenance strategies, leveraging the advancements brought about by Industry 4.0 [11].
+Efficiency is the crucial in any production sector, where the demand for seamless production processes is heightened by consumer expectations and market competition. The motivation for this research stems from the recognition that the prevalent maintenance paradigms fall short of meeting the industry's dynamic demands. Unplanned downtime can disrupt production cycles and lead to financial setbacks. To address these challenges, the motivation is to delve into the realm of predictive maintenance strategies, leveraging the advancements brought about by Industry 4.0.
 
-The key motivation lies in reshaping the maintenance landscape, moving from scheduled interventions to a predictive model that anticipates and mitigates potential failures [12]. By embracing Industry 4.0 technologies, such as IoT devices, automation, and data analytics, the goal is to not only enhance operational efficiency but also to enter in a new era of cost-effective and proactive maintenance practices. This research seeks to contribute valuable insights that empower mineral water production facilities to navigate the complexities of modern manufacturing, ensuring a continuous and optimized production flow [13]. As we embark on this exploration, the aim is to lay the groundwork for a paradigm shift that aligns maintenance strategies with the dynamic needs of Industry 4.0, ultimately adopting a resilient and forward-looking mineral water production system.
+The key motivation lies in reshaping the maintenance landscape, moving from scheduled interventions to a predictive model that anticipates and mitigates potential failures. By embracing Industry 4.0 technologies, such as IoT devices, automation, and data analytics, the goal is to not only enhance operational efficiency but also to enter in a new era of cost-effective and proactive maintenance practices. This research seeks to contribute valuable insights that empower mineral water production facilities to navigate the complexities of modern manufacturing, ensuring a continuous and optimized production flow. As we embark on this exploration, the aim is to lay the groundwork for a paradigm shift that aligns maintenance strategies with the dynamic needs of Industry 4.0, ultimately adopting a resilient and forward-looking mineral water production system.
  
 \section{Problem and Approach}
 
@@ -140,12 +146,20 @@ The key motivation lies in reshaping the maintenance landscape, moving from sche
 \emph{Problem.}
 In traditional manufacturing settings, equipment maintenance is often performed on a fixed schedule or in reaction to failures. This approach can lead to unnecessary downtime, increased maintenance costs, and a higher risk of unexpected breakdowns. In mineral water production, where efficiency is crucial, minimizing downtime and optimizing maintenance activities are essential.  
 
+
+In the realms of Industry 4.0 the main challenge lies in ensuring seamless availability, interoperability and effective communication among diverse components. Integrating various programming languages, frameworks, and technologies adds complexity, each bringing its unique advantages and trade-offs.
+
+This paper aims to identify architectural patterns that leverage best practices to address this challenge. By exploring associated advantages and constraints, the goal is to propose a unified solution for robust and resilient systems.
+
+\newblock 
+
 \emph{Research questions:}
 \begin{enumerate}
-    \item How can predictive maintenance strategies be effectively implemented in mineral water production to minimize downtime and enhance operational efficiency?
-    \item What insights can be gained from the complex decision-making process involved in designing a flexible system that meets the dynamic demands of evolving manufacturing needs in the context of Industry 4.0?
+    \item How chosen architecture design support a production system requirements?
+    \item Which architectural trade-offs must be taken due to the technology choices? 
 \end{enumerate}
 
+\newblock 
 
 \emph{Approach.}
 The following steps are taken to answer this paper's research questions: 
@@ -155,25 +169,27 @@ The following steps are taken to answer this paper's research questions:
     \item Conduct simulations or real-world testing to validate the effectiveness of the prototype in facilitating seamless information exchange
 \end{enumerate}
 
-
+\newblock 
 
 \section{Related work}
 \label{sec:related_work}
-The systematic literature review undertaken in this study explores the current state of research in Industry 4.0 production systems, with a specific focus on mineral water production [1]. The review encompasses a comprehensive search strategy employing the ScienceDirect academic database, utilizing key search terms such as "Industry 4.0," "Mineral Water," and "Smart Manufacturing" [3].
 
-The inclusion and exclusion criteria were carefully defined to ensure relevance to Industry 4.0 and technological advancements [3]. The review's findings are organized into four key themes: Integration of IoT, Automation and Robotics, Big Data Analytics, and Sustainability [3].
 
-These themes represent significant trends in the adoption of Industry 4.0 principles in manufacturing, particularly in the context of mineral water production [1][4]. The Integration of IoT is identified as a major trend, emphasizing the extensive use of IoT devices equipped with sensors to monitor and control various aspects of the production process [3].
+The systematic literature review undertaken in this study explores the current state of research in Industry 4.0 production systems, with a specific focus on mineral water production \cite{Ali2023}. The review encompasses a comprehensive search strategy employing the ScienceDirect academic database, utilizing key search terms such as "Industry 4.0," "Mineral Water," and "Smart Manufacturing" \cite{Soori2023}.
 
-Automation and Robotics are highlighted as transformative elements, with a focus on Reconfigurable Manufacturing Systems (RMS) [4]. Examples of RMS applications, such as reconfigurable robots and modular processes, showcase the potential to manage and automate complex and customized manufacturing processes [4].
+The inclusion and exclusion criteria were carefully defined to ensure relevance to Industry 4.0 and technological advancements \cite{Soori2023}. The review's findings are organized into four key themes: Integration of IoT, Automation and Robotics, Big Data Analytics, and Sustainability \cite{Soori2023}.
 
-Big Data Analytics is recognized as a significant aspect of Industry 4.0 adoption, providing in-depth data exploration for a better understanding of manufacturing processes [5]. The challenges of developing software tools for customized data analysis and visualization are acknowledged, with a mention of a semantic-based visual query system bridging the gap between manufacturing experts and IT professionals [5].
+These themes represent significant trends in the adoption of Industry 4.0 principles in manufacturing, particularly in the context of mineral water production \cite{Ali2023} \cite{Morgan2021}. The Integration of IoT is identified as a major trend, emphasizing the extensive use of IoT devices equipped with sensors to monitor and control various aspects of the production process \cite{Soori2023}.
 
-Sustainability is a key focus in the context of mineral water production, with Industry 4.0 technologies playing a vital role [7]. Advanced ICT solutions, including Blockchain and Artificial Intelligence, coupled with smart concepts like smart metering and demand response, contribute to sustainable management of water supply systems [7][8]. The potential for achieving significant energy and cost savings aligns with the global shift toward eco-friendly manufacturing practices [7].
+Automation and Robotics are highlighted as transformative elements, with a focus on Reconfigurable Manufacturing Systems (RMS) \cite{Morgan2021}. Examples of RMS applications, such as reconfigurable robots and modular processes, showcase the potential to manage and automate complex and customized manufacturing processes \cite{Morgan2021}.
 
-In the discussion section, the synthesis of these findings emphasizes the transformative impact of Industry 4.0 technologies on mineral water production [1][4][7]. The use of IoT devices, automation, big data analytics, and sustainability practices collectively reshape the industry, fostering efficiency and environmentally conscious production processes [1][3][7].
+Big Data Analytics is recognized as a significant aspect of Industry 4.0 adoption, providing in-depth data exploration for a better understanding of manufacturing processes \cite{Berges2021}. The challenges of developing software tools for customized data analysis and visualization are acknowledged, with a mention of a semantic-based visual query system bridging the gap between manufacturing experts and IT professionals \cite{Berges2021}.
 
-This systematic literature review contributes to the field by providing a comprehensive overview of the integration of Industry 4.0 technologies in mineral water production [1]. The synthesis of findings highlights key trends, challenges, and opportunities, offering valuable insights for researchers, practitioners, and industry stakeholders [1][3][7]. The contextualization of this study within the existing state of the art underscores its contribution to advancing knowledge in the field of smart manufacturing and Industry 4.0 applications in the specific domain of mineral water production [1][3].
+Sustainability is a key focus in the context of mineral water production, with Industry 4.0 technologies playing a vital role \cite{Bai2020}. Advanced ICT solutions, including Blockchain and Artificial Intelligence, coupled with smart concepts like smart metering and demand response, contribute to sustainable management of water supply systems \cite{Bai2020}\cite{Grigoras2018}. The potential for achieving significant energy and cost savings aligns with the global shift toward eco-friendly manufacturing practices \cite{Bai2020}.
+
+In the discussion section, the synthesis of these findings emphasizes the transformative impact of Industry 4.0 technologies on mineral water production \cite{Ali2023}\cite{Morgan2021}\cite{Bai2020}. The use of IoT devices, automation, big data analytics, and sustainability practices collectively reshape the industry, fostering efficiency and environmentally conscious production processes\cite{Ali2023}\cite{Soori2023}\cite{Bai2020}.
+
+This systematic literature review contributes to the field by providing a comprehensive overview of the integration of Industry 4.0 technologies in mineral water production \cite{Ali2023}. The synthesis of findings highlights key trends, challenges, and opportunities, offering valuable insights for researchers, practitioners, and industry stakeholders \cite{Ali2023}\cite{Soori2023}\cite{Bai2020}. The contextualization of this study within the existing state of the art underscores its contribution to advancing knowledge in the field of smart manufacturing and Industry 4.0 applications in the specific domain of mineral water production \cite{Ali2023}\cite{Soori2023}.
 
 
 \section{Use Case and Quality Attribute Scenario}
@@ -182,7 +198,45 @@ This systematic literature review contributes to the field by providing a compre
 \subsection{Use Case}
 \label{sec:use_case}
 \subsubsection{\textbf{Produce Order}}
-The use case outlines the systematic process undertaken by the system to manage and fulfill customer orders. In this scenario, the project manager inserts required data for the new order and the system picks it up and act as primary actor, orchestrating various stages of order processing. The use case initiates when a request is made by the customer and project manager proceed with order request by filling customer name, amount and selecting mineral water bottle size.  Upon fulfilling this precondition, the order undergoes a series of steps. Initially, the Order Management System receives and stores the order before transmitting it to the scheduler. The scheduler, requests the necessary resources from the Supply Management System. The supply management system plays a pivotal role by providing the required resources, ensuring the seamless continuation of the order processing. Subsequently, the scheduler queues the order, and the Production Management System accepts and starts the production line process. An alternative flow is accounted for, wherein the Supply Management System may notify about insufficient resources, prompting the system to handle such scenarios appropriately by notifying product manager to reevaluate the order.
+
+The use case presents process from order initiation to successful production 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{0.7\linewidth}|}
+        \hline
+        \textbf{Use Case Name} & Produce Order \\
+        \hline
+        \textbf{Description} & The system manages and fulfills customer orders by orchestrating various stages of order processing, initiated by a customer request. \\
+        \hline
+        \textbf{Primary Actor} & System \\
+        \hline
+        \textbf{Preconditions} & A customer request is made, and the project manager provides necessary order details (customer name, amount, mineral water bottle size). \\
+        \hline
+        \textbf{Main Flow} & \\
+        1. & Project manager inserts order details: customer name, amount, and selects mineral water bottle size. \\
+        2. & System receives and stores order information. \\
+        3. & System transmits the order to the scheduler. \\
+        4. & System requests necessary resources from supply \\
+        5. & System receives required resources. \\
+        6. & Order placed inside the queue. \\
+        7. & System accepts order and initiates the production line process. \\
+        8. & Project manager is informed about current state of the production proce. \\
+        \hline
+        \textbf{Alternative Flow} & \\
+        A1. & SSystem notifies insufficient resources. \\
+        A2. & System notifies the product manager to reevaluate the order. \\
+        \hline
+        \textbf{Postconditions} & The order is successfully processed and fulfilled. \\
+        \hline
+        \textbf{Exceptions} & None \\
+        \hline
+        \textbf{Notes} & This use case outlines the systematic process of managing and fulfilling customer orders, ensuring a seamless flow from order initiation to production. \\
+        \hline
+    \end{tabular}
+    \caption{Use Case: Produce Order}
+\end{table}
+
 
 \subsection{Quality Attribute Scenarios}
 \label{sec:qas}
@@ -190,7 +244,7 @@ The use case outlines the systematic process undertaken by the system to manage 
 
 \subsubsection{\textbf{Interoperability}}The System needs to integrate with a new third-party logistics provider to expand the supply chain network.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|p{0.6\linewidth}|}
         \hline
@@ -209,12 +263,12 @@ The use case outlines the systematic process undertaken by the system to manage 
         \textbf{Response Measure:} & Measure the time and success rate of integrating with new systems or updates, ensuring minimal downtime and successful data transfer. \\
         \hline
     \end{tabular}
+    \caption{Interoperability QAS}
 \end{table}
-
 
 \subsubsection{\textbf{Availability}}Production software must run 24/7
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|p{0.6\linewidth}|}
         \hline
@@ -233,11 +287,12 @@ The use case outlines the systematic process undertaken by the system to manage 
         \textbf{Response Measure:} & Measure the time it takes for the system to recover from an outage or performance degradation, ensuring that the system maintains 24/7 availability with minimal downtime. \\
         \hline
     \end{tabular}
+    \caption{Availability QAS}
 \end{table}
 
 \subsubsection{\textbf{Continuous Deployability}}Production software must be continuously deployable
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|p{0.6\linewidth}|}
         \hline
@@ -256,13 +311,48 @@ The use case outlines the systematic process undertaken by the system to manage 
         \textbf{Response Measure:} & Measure the time and success rate of deploying new changes, ensuring that updates can be seamlessly integrated without disrupting the order fulfillment process. \\
         \hline
     \end{tabular}
+    \caption{Continuous Deployability QAS}
 \end{table}
 
 
-\section{The solution}
+\section{solution}
 \label{sec:middleware_architecture}
-
 The design of the system architecture is crucial to achieving the stated Quality Attribute Scenarios (QASes) outlined in the previous section. This section will delve into the proposed design that aims to ensure interoperability, availability, and continuous deployability of the system.
+
+The designed architecture consists of five services with different programming languages and frameworks, two databases and various communication mechanisms including message broker. All of components are containerized through Docker and managed using Docker Compose. The system architecture diagram can be seen in Figure \ref{fig:system-architecture}. The communication between system components is illustrated in the Sequence diagram \ref{fig:sequence-diagram} found in Appendix A
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{diagrams/architecture-diagram.png}
+    \caption{System architecture diagram}
+    \label{fig:system-architecture}
+\end{figure}
+
+\subsection{Services}
+\label{sec:services}
+\begin{itemize}
+    \item Order management system (OMS) (C\#/ASP.NET)
+    \item Production management system (PMS) (Python)
+    \item Supply management system (SMS) (Java/Spring)
+    \item Scheduler (Python)
+    \item Logging (JavaScript/Node.js)
+    \item Dashboard/Client (JavaScript/React)
+\end{itemize}
+
+\subsection{Databases}
+\label{sec:databases}
+\begin{itemize}
+    \item MongoDB (used by order management system to store orders)
+    \item MySQL (used by supply management system to store resources)
+\end{itemize}
+
+\subsection{Communication mechanisms}
+\label{sec:communication-mechanisms}
+\begin{itemize}
+    \item MQTT (Mosquitto message broker)
+    \item RestAPI
+    \item WebSocket
+\end{itemize}
 
 To ensure availability, the system employs a robust monitoring strategy, utilizing a logging system that actively sends logs through websockets from multiple components. This proactive approach enables real-time fault detection, complemented by exception handling in critical areas of the production process to facilitate graceful recovery from faults.
 
@@ -280,7 +370,7 @@ Point-to-point communication between microservices is facilitated through a comb
 Containerization was implemented using Docker and Docker Compose to allow define and manage the services comprising the system. Each individual service had build Docker image inside CI/CD pipeline that would be push to Github Container Registry. Docker Compose simplified the orchestration and deployment of multiple containers, ensuring consistency across different environments, including development (local) and production (deployed to VM). However, approach using might to be suitable to make application completetly scalable as docker compose only allows to deploy to a single server. Better approach would be using Docker Swarm or more advanced scaling tool like K8s (Kubernetes) to manage containers deployed across multiple nodes. [14]
 
 The Observer Pattern is applied in the system to handle situations where the Supply Management System notifies about insufficient resources. In this scenario, the Order Management System acts as the subject, and the Supply Management System serves as the observer. This pattern enables efficient communication and notification of changes in resource availability, allowing the system to dynamically respond to shortages. 
-
+ 
 \section{Evaluation}
 \label{sec:evaluation}
 
@@ -293,32 +383,101 @@ Section \ref{sec:analysis} presents the analysis of the results from the experim
  
 \subsection{Experiment design}
 \label{sec:design}
-The evaluation design aims to assess the effectiveness of the system in meeting the specified Quality Attribute Scenarios (QASes) – interoperability, availability, and continuous deployability. The evaluation involves a systematic approach, including measurements, a pilot test, and detailed analysis of the results.
+The evaluation design aims to assess the effectiveness of the system in meeting the specified Quality Attribute Scenarios (QASes) – interoperability and availability. The evaluation involves a systematic approach, including measurements, a pilot test, and detailed analysis of the results.
 
-To measure interoperability, the evaluation assesses the system's ability to seamlessly integrate with external systems, considering factors such as language compatibility, data exchange efficiency, and API effectiveness.
-Postman and Newman were the main tools to conduct tests for application interoperability.  
-Key metrics include response time for integration with new logistics providers and success rates for updates to existing interfaces.
+The experiment design for assessing the interoperability of the mineral water production system emphasizes a systematic approach to evaluate its ability to integrate seamlessly with external systems. The design includes a series of scenarios to simulate real-world interactions with external providers involved in the production process. For instance, scenarios involved with integrating with bottling partners with supply management system, but its not limited to be extend with other systems, like quality control or distribution networks. The expreriment design use of Postman and Newman as primary tools for conducting tests, offering a standardized and automated approach to evaluating API effectiveness and responsiveness. 
 
-Availability is measured through monitoring the system's uptime and responsiveness. Metrics include system downtime, recovery time from failures, and response times during peak loads. Continuous health checks and monitoring tools are employed to evaluate the system's robustness and availability in various operational conditions.
-
-Continuous deployability is evaluated by focusing on the system's agility in deploying new changes or feature updates. The evaluation considers the time and success rate of deploying new code changes through the Continuous Integration/Continuous Deployment (CI/CD) pipeline. Key metrics include deployment frequency, lead time for changes, and the percentage of successful deployments without disrupting order fulfillment
+The experiment design for evaluating the availability of the mineral water production system places a strong emphasis on creating scenarios that mimic real-world situations where system availability is critical. Scenarios include sudden increases in production demand, simulated server failures, and fluctuations in network stability. These controlled experiments aim to assess the system's ability to maintain seamless operations during both expected and unexpected events. The introduction of varying stress levels, such as increased order volume or temporary network outages, allows for a comprehensive evaluation of the system's responsiveness and resilience. Additionally, the design incorporates the utilization of Locust, a load testing tool, to simulate a large number of concurrent users and assess the system's performance under heavy loads. Specifically, Locust will be configured to test the Message Queuing Telemetry Transport (MQTT) protocol between scheduler system and production management system, which is essential for real-time communication in between scheduler and production system. The experiment also specifically focused on measuring the system's capability to sustain message delivery and handle potential bottlenecks during peak demand scenarios
 
 \subsection{Measurements}
 \label{sec:measurements}
 
+The measurements employed in assessing interoperability focus on critical aspects that reflect the effectiveness of the mineral water production system's integration capabilities. Data transfer time and accuracy rate measurements calculate the efficiency of information exchange with external entities, ensuring timely and precise communication. API response time and error rates serve as crucial indicators of the effectiveness of the system's interfaces during real-time interactions with external provider bottling systems. Interoperability metrics include integration time for new partners, showcasing the system's adaptability, and success rates for interface updates, highlighting its ability to evolve alongside changes in external systems. These measurements collectively provide a robust framework for objectively evaluating and improving the mineral water production system's interoperability with its diverse network of partners.
+
+The identified key measurements were utilized to quantify the performance and reliability of the mineral water production system, specifically in terms of availability. These measurements encompassed response times under both normal and stressed conditions. The system metrics served as a means to monitor heightened demand and order amounts.To assess the system's adaptability to varying demands, Locust played a pivotal role. The tool measured metrics such as Requests Per Second (RPS) and response times during MQTT interactions with the Mosquitto message broker. This approach provided valuable insights into the system's scalability and responsiveness in managing real-time communication.Throughout the experiment, the simulation of increased demand was systematically executed by progressively introducing more users. This gradual escalation in user count aimed to measure the system's performance under varying workloads. The Locust tool facilitated load testing for MQTT, enabling a comprehensive evaluation of the mineral water production system's continuous availability and robustness in the face of challenging scenarios.
 
 \subsection{Pilot test}
 \label{sec:pilot_test}
 
+A described pilot test was conducted to assess the system's availability. The pilot test aimed to determine the appropriate number of replications needed to ensure robust and reliable results. This involved running a subset of the experiments and analyzing the obtained data to estimate the variability in the measurements.
+
+The results presented in Table~\ref{table:request-stats} provide insights into the request statistics, including the number of requests, failure rates, and response times. Similarly, Table~\ref{table:response-time-stats} details percentiles of the response times observed during the pilot test. The Locust test results are visualized in Figure \ref{fig:locust-test}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|p{0.2\linewidth}|}
+        \hline
+        \textbf{Method} & \textbf{Name} & \textbf{Value} \\
+        \hline
+        \multirow{2}{*}{MQTT publish:to:order-topic} & \# Requests & 1491304 \\
+        \cline{2-3}
+        & \# Fails & 12600 \\
+        \cline{2-3}
+        & Average (ms) & 237 \\
+        \cline{2-3}
+        & Min (ms) & 0 \\
+        \cline{2-3}
+        & Max (ms) & 3666 \\
+        \cline{2-3}
+        & Average size (bytes) & 122 \\
+        \cline{2-3}
+        & RPS & 1657.0 \\
+        \cline{2-3}
+        & Failures/s & 14.0 \\
+        \hline
+    \end{tabular}
+    \caption{Request Statistics}
+    \label{table:request-stats}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|p{0.3\linewidth}|}
+        \hline
+        \textbf{Method} & \textbf{Name} & \textbf{Value} \\
+        \hline
+        \multirow{2}{*}{MQTT publish:to:order-topic} & 50\%ile (ms) & 83 \\
+        \cline{2-3}
+        & 60\%ile (ms) & 160 \\
+        \cline{2-3}
+        & 70\%ile (ms) & 280 \\
+        \cline{2-3}
+        & 80\%ile (ms) & 420 \\
+        \cline{2-3}
+        & 90\%ile (ms) & 640 \\
+        \cline{2-3}
+        & 95\%ile (ms) & 900 \\
+        \cline{2-3}
+        & 99\%ile (ms) & 1800 \\
+        \cline{2-3}
+        & 100\%ile (ms) & 3700 \\
+        \hline
+    \end{tabular}
+    \caption{Response Time Statistics}
+    \label{table:response-time-stats}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{images/total_requests_per_second_1702247160.png}
+    \caption{Locust test results}
+    \label{fig:locust-test}
+\end{figure}
+
+The pilot test for assessing interoperability involves a preliminary run of selected scenarios using Postman and Newman tools to validate the experimental design. Key focuses include confirming the tools' accuracy in simulating interactions with external systems, verifying the correctness of API calls, assessing scenario coverage, ensuring data accuracy, testing system adaptability to changes, and collecting participant feedback. Results from the pilot test inform adjustments to the experiment design, ensuring a refined and optimized approach for the comprehensive evaluation of the mineral water production system's interoperability. The test results can be found in \ref{fig:interoperability-test} found in Appendix B
+
 \subsection{Analysis}
 \label{sec:analysis}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{total_requests_per_second_1702247160.png}
-    \caption{Locust test results}
-    \label{fig:enter-label}
-\end{figure}
+The experiment design for evaluating the mineral water production system's interoperability and availability is structured to comprehensively assess its performance in meeting specified Quality Attribute Scenarios (QASes) with a particular focus on interoperability and availability. The systematic approach involves real-world scenario simulations, utilizing tools such as Postman, Newman, and Locust, along with detailed measurements and a pilot test to ensure robustness and reliability of the evaluation.
+
+In assessing interoperability, the experiment design emphasizes the seamless integration of the system with external entities, exemplified through scenarios involving bottling partners, supply management systems, and potential extensions to other systems like quality control or distribution networks. The use of Postman and Newman as primary tools ensures a standardized and automated evaluation of API effectiveness and responsiveness.
+
+For availability assessment, the experiment design creates scenarios that mimic critical real-world situations, including sudden increases in production demand, server failures, and network fluctuations. Locust, a load testing tool, is employed to simulate a large number of concurrent users and evaluate the system's performance under heavy loads, specifically testing the Message Queuing Telemetry Transport (MQTT) protocol between scheduler and production management systems.
+
+Measurements employed for interoperability focus on critical aspects such as data transfer time, accuracy rate, API response time, and error rates. These metrics provide a robust framework for objectively evaluating the system's integration capabilities and its ability to evolve alongside changes in external systems. For availability assessment, key measurements include Requests Per Second (RPS) and response times under varying conditions, providing insights into the system's scalability and responsiveness.
+
+The pilot test was conducted to assess the system's availability, determining the appropriate number of replications needed for robust results. The obtained data, presented in tables for request statistics and response time statistics, provides insights into the system's behavior under different conditions. Noteworthy findings include acceptable failure rates and response times within expected ranges, establishing a baseline for further analysis.
 
 \section{Future work}
 
@@ -353,29 +512,24 @@ In conclusion, this project is a significant step toward reshaping manufacturing
 
 \bibliographystyle{plain}
 \bibliography{references}
-[1] Mujahid Ali, Bashir Salah, Tufail Habib, "Utilizing industry 4.0-related technologies and modern techniques for manufacturing customized products – Smart yogurt filling system," Journal of Engineering Research, 2023, 100144, ISSN 2307-1877.
 
-[3] Mohsen Soori, Behrooz Arezoo, Roza Dastres, "Internet of things for smart factories in industry 4.0, a review," Internet of Things and Cyber-Physical Systems, Volume 3, 2023, Pages 192-204, ISSN 2667-3452.
+\section{Appendix A}
 
-[4] Jeff Morgan, Mark Halton, Yuansong Qiao, John G. Breslin, "Industry 4.0 smart reconfigurable manufacturing machines," Journal of Manufacturing Systems, Volume 59, 2021, Pages 481-506, ISSN 0278-6125.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{diagrams/sequence-diagram.png}
+    \caption{Sequence diagram}
+    \label{fig:sequence-diagram}
+\end{figure}
 
-[5] Idoia Berges, Víctor Julio Ramírez-Durán, Arantza Illarramendi, "A Semantic Approach for Big Data Exploration in Industry 4.0," Big Data Research, Volume 25, 2021, 100222, ISSN 2214-5796.
+\section{Appendix B}
 
-[7] Chunguang Bai, Patrick Dallasega, Guido Orzes, Joseph Sarkis, "Industry 4.0 technologies assessment: A sustainability perspective," International Journal of Production Economics, Volume 229, 2020, 107776, ISSN 0925-5273.
-
-[8] G. Grigoras et al., "ICT based Smart Management Solution to Realize Water and Energy Savings through Energy Efficiency Measures in Water Distribution Systems," 2018 10th International Conference on Electronics, Computers and Artificial Intelligence (ECAI), Iasi, Romania, 2018, pp. 1-4, doi: 10.1109/ECAI.2018.8679012.
-
-[9] Smith, J., Johnson, A.,  Brown, R. (2022). Predictive Maintenance Strategies in Manufacturing. {Journal of Industrial Engineering},{15}(2), 123-145. DOI: 10.1234/jie.2022.12345
-
-[10] Williams, C.,  Davis, M. (2021). Challenges in Traditional Maintenance Approaches. {International Journal of Production Management}, {28}(4), 567-580. DOI: 10.5678/ijpm.2021.87654
-
-[11] Anderson, P.,  White, L. (2020). Industry 4.0 Technologies and Their Impact on Predictive Maintenance. {Manufacturing Technology Research}, {7}(1), 45-62. DOI: 10.789/mtr.2020.112233
-
-[12] Garcia, R.,  Martinez, S. (2019). Paradigm Shift in Maintenance: From Scheduled to Predictive. {Journal of Advanced Manufacturing}, {12}(3), 201-220. DOI: 10.1012/jam.2019.554433
-
-[13] Taylor, E.,  Harris, D. (2018). Advancements in Industry 4.0 and Their Application in Mineral Water Production. {Journal of Manufacturing Innovation}, {5}(2), 78-95. DOI: 10.9876/jmi.2018.332211
-
-[14]  Sharma, D. K. (2023, June 2). "Kubernetes vs Docker Compose: An Overview." K21academy. Cloud Training Program. Retrieved from: https://k21academy.com/docker-kubernetes/docker-compose-vs-kubernetes
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{images/newman-test-report.png}
+    \caption{Interoperability test results}
+    \label{fig:interoperability-test}
+\end{figure}
 
 \vspace{12pt}
 \end{document}
